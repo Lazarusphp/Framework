@@ -1,0 +1,8 @@
+vendor
+Dev
+/Configs
+.env
+.vscode
+public/test.php
+public/testsub.php
+.idea

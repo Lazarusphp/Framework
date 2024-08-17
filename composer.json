@@ -1,0 +1,39 @@
+{
+    "name": "lazarusphp/framework",
+    "description": "A small slim framework build in php",
+    "type": "project",
+    "license": "GPL",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+           "LazarusPhp\\AuthManager\\": "Dev/LazarusPhp/AuthManager/src",
+           "LazarusPhp\\TfaManager\\": "Dev/LazarusPhp/TfaManager/src/"
+            
+        }
+    },
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Martin Bamber"
+        }
+    ],
+    "require-dev": {
+        "fakerphp/faker": "^1.9.1"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.0.2",
+        "vlucas/phpdotenv": "^5.2",
+        "laminas/laminas-diactoros": "^2.5",
+        "phpmailer/phpmailer": "^6.2",
+        "miladrahimi/phprouter": "^5.1",
+        "lazarusphp/sessionmanager": "^v1.0.1",
+        "lazarusphp/databasemanager": "^v1.0.0"
+        
+    }
+
+}
