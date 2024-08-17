@@ -4,25 +4,34 @@ namespace  App\System\Classes;
 
 use App\System\Classes\ErrorHandler;
 use App\System\App;
+use App\System\Classes\Structure\Structure;
 
 class Views
 {
 
     private $data = [];
     private $views;
-    private $templates;
+    private $devmode = true;
     private $cache;
 
     public function __construct()
     {
-
-        $app = new App();
         $this->views = VIEWS;
         $this->cache = CACHE;
         // Create the folders
 
         $this->DetectFolder($this->views);
         $this->DetectFolder($this->cache);
+        $this->preViewArrays();
+    }
+
+    public function preViewArrays()
+    {
+        // Add Values here to Pass Before the views are Loaded
+
+        $this->data["structure"] = new Structure();
+        $this->data["date"] = new Date();
+        
     }
 
     private function DetectFolder($file)
@@ -66,12 +75,13 @@ class Views
         if ($this->ViewExists($path) == true) {
             // Check if $data is not empty
             if (count($data) > 0) {
-                $this->data = $data;
+                $this->data = array_combine($this->data,$data);
             }
             // Check if the $data Variable is an empty array while Counting Arrays
             if (is_array($this->data)) {
                 extract($this->data);
             }
+            $this->devmode == true ? var_dump($this->data) : false;
             // Output the data to the Next Page 
             ob_start();
             require_once($path);
