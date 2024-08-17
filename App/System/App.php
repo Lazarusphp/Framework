@@ -19,7 +19,6 @@ class App
     {
         $this->structure = new Structure();
         $this->structure->loadPaths();
-        ErrorHandler::Boot();
         Errors::boot();
         $this->boot();
     }
@@ -27,7 +26,7 @@ class App
 
     public function boot($name = null)
     {
-        CredentialsManager::SetConfig(CONFIG);
+        CredentialsManager::SetConfig(CONFIG.$this->config);
         $session = new Sessions();
         if (session_status() == PHP_SESSION_NONE) {
             $session->start();
