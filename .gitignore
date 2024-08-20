@@ -6,3 +6,4 @@ Dev
 public/test.php
 public/testsub.php
 .idea
+composer.lock

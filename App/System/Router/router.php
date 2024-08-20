@@ -8,10 +8,7 @@ use App\System\Classes\Required\CustomErrorHandler;
 
 $router = Router::create();
 // Output the Default page
-$router->get('/?',function()
-{
-    echo "Hello Welcome to Lazarus php"
-},"home");
+$router->get('/?',[HomeController::class,"index"],"home");
 
 try {
     $router->dispatch();

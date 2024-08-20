@@ -9,7 +9,6 @@ class Security
 {
     private $token;
 
-
     public function __construct()
     {
         // Generate a New Token

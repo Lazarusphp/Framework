@@ -1,13 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Model\Model;
-use App\System\Classes\Required\Validation;
+use App\System\Classes\Templating\Views;
 
 class HomeController extends Model
 {
-    public function index()
+    public function index(Views $view)
     {
-        echo "LazarusPhp";
+        echo $view->render("/test.php");
     }
 
 
