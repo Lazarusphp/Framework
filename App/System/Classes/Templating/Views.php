@@ -11,7 +11,7 @@ class Views
 
     private $data = [];
     private $views;
-    private $devmode = false;
+    private $devmode = [];
     private $cache;
 
     public function __construct()
@@ -23,6 +23,12 @@ class Views
         $this->DetectFolder($this->views);
         $this->DetectFolder($this->cache);
         $this->preViewArrays();
+        $this->devmode = parse_ini_file(CONFIG."/System.ini");
+        if($this->devmode["devmode"] == true)
+        {
+            echo "Devmode Enabled";
+        }
+
     }
 
     public function preViewArrays()
