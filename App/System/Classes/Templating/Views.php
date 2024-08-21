@@ -23,7 +23,6 @@ class Views
         $this->DetectFolder($this->views);
         $this->DetectFolder($this->cache);
         $this->preViewArrays();
-        $this->devmode = parse_ini_file(CONFIG."/System.ini");
     }
 
     public function preViewArrays()
