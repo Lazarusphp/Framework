@@ -1,10 +1,8 @@
 <?php
 namespace App\Http\Model;
-use LazarusPhp\DatabaseManager\Database;
+use LazarusPhp\Orm\Orm;
 
-class Model extends Database
+class Model extends Orm
 {
-    protected $hidden = ["id","password"];
 
-    
 }
