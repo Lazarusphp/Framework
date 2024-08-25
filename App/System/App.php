@@ -11,7 +11,7 @@ class App
     public $root;
     public $paths;
     public $path;
-    public $config = "/config.php";
+    public $config = "/Config.php";
 
     private $structure;
 
@@ -30,7 +30,6 @@ class App
         $session = new Sessions();
         if (session_status() == PHP_SESSION_NONE) {
             $session->start();
-            
         }
         include_once(ROUTER);
        
