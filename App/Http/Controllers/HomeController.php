@@ -1,14 +1,17 @@
 <?php
 namespace App\Http\Controllers;
-use App\Http\Model\Model;
+use App\Http\Model\Users;
 use App\System\Classes\Templating\Views;
 
-class HomeController extends Model
+class HomeController
 {
-    public function index(Views $view)
+    public function index()
     {
-        echo $view->render("/test.php");
+      $users = new Users();
+  
+$users = $users->table("users")->findById(1)->save();
     }
+
 
 
 }
