@@ -2,7 +2,7 @@
 namespace App\Http\Model;
 use LazarusPhp\Orm\Orm;
 
-class Model extends Orm
+class Model extends OrmCore
 {
 
 }
