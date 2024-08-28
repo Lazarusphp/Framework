@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Model;
-use LazarusPhp\Orm\OrmCore;
+use LazarusPhp\Orm\Orm;
 
-class Model extends OrmCore
+class Model extends Orm
 {
 
 }
