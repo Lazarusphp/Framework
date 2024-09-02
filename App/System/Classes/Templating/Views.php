@@ -40,6 +40,13 @@ class Views
             return trigger_error("Folder :" . $file . " Does not exist");
         }
     }
+
+    public function with($name,$value)
+    {
+         $this->data[$name] = $value;
+         return $this;
+    }
+    
     public function __set($name, $value)
     {
         return $this->data[$name] = $value;
@@ -69,14 +76,11 @@ class Views
     }
 
 
-    public function render($file, array $data = [])
+    public function render($file)
     {
         $path = $this->views . $file;
         if ($this->ViewExists($path) == true) {
             // Check if $data is not empty
-            if (count($data) > 0) {
-                $this->data = array_combine($this->data,$data);
-            }
             // Check if the $data Variable is an empty array while Counting Arrays
             if (is_array($this->data)) {
                 extract($this->data);
