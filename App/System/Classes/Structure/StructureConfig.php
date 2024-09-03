@@ -46,13 +46,19 @@ class StructureConfig
 
     protected function generateRoot()
     {
-        if (is_dir("../public")) {
-            $explode = explode("/", getcwd());
-            array_pop($explode);
-            $this->root = implode("/", $explode);
-        } else {
-            $this->root = $_SERVER["DOCUMENT_ROOT"];
+
+        $allowedDir = ["public_html","public"];
+
+        foreach ($allowedDir as $dir)
+        {
+            if(is_dir("../$dir"))
+                {
+                    $explode = explode("/", getcwd());
+                    array_pop($explode);
+                    $this->root = implode("/", $explode);
+                }
         }
+
         return $this->root;
     }
 }
