@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Model;
-use LazarusPhp\Orm\OrmCore;
+use LazarusPhp\QueryBuilder\Core;
 
-class Model extends OrmCore
+class Model extends Core
 {
-
+    protected $allowed = ["email","username"];
+    protected $filtered = ["password"];
 }
