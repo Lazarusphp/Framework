@@ -38,7 +38,8 @@ class StructureConfig
             "config" => $this->root . "/Configs",
             "uploads" => $this->root . "/Assets/Uploads",
             "views" => $this->root . "/Views",
-            "cache" => $this->root . "/Cache"
+            "cache" => $this->root . "/Cache",
+            "functions"=>$this->root."/App/functions.php"
         ];
     }
 
