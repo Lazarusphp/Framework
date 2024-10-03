@@ -2,6 +2,7 @@
 
 namespace App\System;
 use App\System\Classes\Structure\Structure;
+use LazarusPhp\DateManager\Date;
 use LazarusPhp\SessionManager\Sessions;
 use App\System\Classes\ErrorHandler\Errors;
 use LazarusPhp\DatabaseManager\CredentialsManager;
@@ -31,6 +32,7 @@ class App
         if (session_status() == PHP_SESSION_NONE) {
             $session->start();
         }
+        include_once(FUNCTIONS);
         include_once(ROUTER);
        
     }
