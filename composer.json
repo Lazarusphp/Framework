@@ -10,7 +10,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "LazarusPhp\\Orm\\": "Dev/LazarusPhp/Orm/src"
+            "LazarusPhp\\DateManager\\": "Dev/LazarusPhp/DateManager/src"
         }
     },
     "prefer-stable": true,
@@ -30,7 +30,8 @@
         "phpmailer/phpmailer": "^6.2",
         "miladrahimi/phprouter": "^5.1",
         "lazarusphp/sessionmanager": "^v1.0.1",
-        "lazarusphp/databasemanager": "^v1.0.0"
+        "lazarusphp/databasemanager": "^v1.0.0",
+        "lazarusphp/querybuilder": "^1.0"
         
     }
 
