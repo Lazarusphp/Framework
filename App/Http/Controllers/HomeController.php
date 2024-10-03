@@ -2,14 +2,13 @@
 namespace App\Http\Controllers;
 use App\Http\Model\Users;
 use App\System\Classes\Templating\Views;
+use LazarusPhp\DateManager\Date;
 
 class HomeController
 {
     public function index()
     {
-      $users = new Users();
-  
-$users = $users->table("users")->findById(1)->save();
+        echo "Welcome to Lazarusphp";
     }
 
 
