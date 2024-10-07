@@ -54,9 +54,9 @@ class StructureConfig
         {
             if(is_dir("../$dir"))
                 {
-                    $explode = explode("/", getcwd());
+                    $explode = explode(DIRECTORY_SEPARATOR, getcwd());
                     array_pop($explode);
-                    $this->root = implode("/", $explode);
+                    $this->root = implode(DIRECTORY_SEPARATOR, $explode);
                 }
         }
 
