@@ -18,6 +18,10 @@ class App
 
     public function __construct()
     {
+        $session = new Sessions();
+        if (session_status() === PHP_SESSION_NONE) {
+            $session->start();
+        }
         $this->structure = new Structure();
         $this->structure->loadPaths();
         Errors::boot();
@@ -28,10 +32,7 @@ class App
     public function boot($name = null)
     {
         CredentialsManager::SetConfig(CONFIG.$this->config);
-        $session = new Sessions();
-        if (session_status() == PHP_SESSION_NONE) {
-            $session->start();
-        }
+
         include_once(FUNCTIONS);
         include_once(ROUTER);
         
