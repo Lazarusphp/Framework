@@ -17,7 +17,12 @@ class App
     private $structure;
 
     public function __construct()
-    {   $this->structure = new Structure();
+      {   
+        ini_set("display_errors",1);
+        ini_set("display_startup_errors",1);
+        error_reporting(E_ALL);
+
+        $this->structure = new Structure();
         $this->structure->loadPaths();
         $this->boot();
         Errors::boot();
@@ -27,6 +32,7 @@ class App
 
     public function boot($name = null)
     {
+       
         CredentialsManager::SetConfig(CONFIG.$this->config);
         $session = new Sessions();
         if (session_status() == PHP_SESSION_NONE) {
