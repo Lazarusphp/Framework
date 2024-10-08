@@ -3,9 +3,10 @@
 namespace App\System;
 use App\System\Classes\Structure\Structure;
 use LazarusPhp\DateManager\Date;
-use LazarusPhp\SessionManager\Sessions;
+use LazarusPhp\SessionManager\SessionCore;
 use App\System\Classes\ErrorHandler\Errors;
 use LazarusPhp\DatabaseManager\CredentialsManager;
+use LazarusPhp\SessionManager\Sessions;
 
 class App
 {
@@ -26,20 +27,15 @@ class App
         $this->structure->loadPaths();
         $this->boot();
         Errors::boot();
- 
+        print_r(get_loaded_extensions());
     }
 
-
-    public function boot($name = null)
+    public function boot()
     {
-       
+
         CredentialsManager::SetConfig(CONFIG.$this->config);
-        $session = new Sessions();
-        if (session_status() == PHP_SESSION_NONE) {
-            $session->start();
-        }
+        Sessions::boot();
         include_once(FUNCTIONS);
         include_once(ROUTER);
-        
     }
 }
