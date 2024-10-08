@@ -48,7 +48,7 @@ class StructureConfig
     protected function generateRoot()
     {
 
-        $allowedDir = ["public_html","public"];
+        $allowedDir = ["public_html","public","www"];
 
         foreach ($allowedDir as $dir)
         {
