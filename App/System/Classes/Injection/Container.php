@@ -55,14 +55,5 @@ class Container
         {
             return null;
         }
-    }
-
-    public function getClass()
-    {
-        if($this->getClass)
-        {
-            return $this->getClass;
-        }
-    }
 
 }
