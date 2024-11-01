@@ -34,7 +34,6 @@ class App
     {
 
         CredentialsManager::SetConfig(CONFIG.$this->config);
-        Sessions::boot();
         include_once(FUNCTIONS);
         include_once(ROUTER);
     }
