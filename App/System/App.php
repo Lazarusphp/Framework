@@ -27,7 +27,6 @@ class App
         $this->structure->loadPaths();
         $this->boot();
         Errors::boot();
-        print_r(get_loaded_extensions());
     }
 
     public function boot()
