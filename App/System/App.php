@@ -40,7 +40,7 @@ class App
     public function boot()
     {
 
-        DbConfig::LoadConfig(CONFIG.$this->config,[ClassesPhpWriter::class]);
+        DbConfig::load(CONFIG.$this->config);
         (new Container([Sessions::class]))->method("instantiate");
         include_once(FUNCTIONS);
      
