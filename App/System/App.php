@@ -2,10 +2,12 @@
 
 namespace App\System;
 use App\System\Classes\Structure\Structure;
-use LazarusPhp\DateManager\Date;
-use LazarusPhp\SessionManager\SessionCore;
 use App\System\Classes\ErrorHandler\Errors;
-use LazarusPhp\DatabaseManager\CredentialsManager;
+use App\System\Classes\Injection\Container;
+use App\System\Classes\PhpWriter as ClassesPhpWriter;
+use LazarusPhp\DatabaseManager\ConfigLoader;
+use LazarusPhp\DatabaseManager\ConfigWriters\PhpWriter;
+use LazarusPhp\DatabaseManager\DbConfig;
 use LazarusPhp\SessionManager\Sessions;
 
 class App
@@ -14,8 +16,9 @@ class App
     public $paths;
     public $path;
     public $config = "/Config.php";
-
     private $structure;
+    private $hashandler;
+    private $sessions;
 
     public function __construct()
       {   
@@ -29,11 +32,17 @@ class App
         Errors::boot();
     }
 
+    public function loadRouter()
+    {
+        include_once(ROUTER);
+    }
+
     public function boot()
     {
 
-        CredentialsManager::SetConfig(CONFIG.$this->config);
+        DbConfig::LoadConfig(CONFIG.$this->config,[ClassesPhpWriter::class]);
+        (new Container([Sessions::class]))->method("instantiate");
         include_once(FUNCTIONS);
-        include_once(ROUTER);
+     
     }
 }
