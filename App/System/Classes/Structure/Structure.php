@@ -15,6 +15,20 @@ class Structure extends StructureConfig
         $this->generatePaths();
     }
 
+    public function __set($name, $path)
+    {
+        $this->paths[$name] = $path;
+        $this->newConstant($name, $path);
+    }
+
+    public function __get($name)
+    {
+        if(array_key_exists($this->paths,$name))
+        {
+            return $this->paths[$name];
+        }
+    }
+
     // Want to add a Path on the Fly use AddPath
     public function addPath($name, $path)
     {
