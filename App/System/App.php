@@ -40,7 +40,7 @@ class App
     {
 
         DbConfig::load(CONFIG.$this->config,[PhpWriter::class]);
-        (new Container([Sessions::class]))->method("instantiate");
+        (new Sessions())->instantiate();
         include_once(FUNCTIONS);
      
     }
