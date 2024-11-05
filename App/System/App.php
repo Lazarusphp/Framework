@@ -29,7 +29,6 @@ class App
         $this->structure = new Structure();
         $this->structure->loadPaths();
         $this->boot();
-        Errors::boot();
     }
 
     public function loadRouter()
@@ -40,7 +39,7 @@ class App
     public function boot()
     {
 
-        DbConfig::load(CONFIG.$this->config);
+        DbConfig::load(CONFIG.$this->config,[PhpWriter::class]);
         (new Container([Sessions::class]))->method("instantiate");
         include_once(FUNCTIONS);
      
