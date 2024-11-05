@@ -32,7 +32,6 @@ class Structure extends StructureConfig
         if (file_exists($name) && is_file($name)) {
             return true;
         } else {
-            // Add ErrorHandler Here;
             return false;
         }
     }

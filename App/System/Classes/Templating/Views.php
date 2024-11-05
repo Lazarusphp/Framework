@@ -2,7 +2,6 @@
 
 namespace  App\System\Classes\Templating;
 
-use App\System\Classes\ErrorHandler\Errors;
 use App\System\Classes\Date;
 use App\System\Classes\Structure\Structure;
 
