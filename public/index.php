@@ -5,8 +5,3 @@ use LazarusPhp\SessionManager\Sessions;
 
 $app = new App();
 $app->loadRouter();
-
-
-
-
-
