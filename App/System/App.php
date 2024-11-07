@@ -41,7 +41,6 @@ class App
 
         DbConfig::load(CONFIG.$this->config,[PhpWriter::class]);
         (new Sessions())->instantiate();
-        include_once(FUNCTIONS);
-     
+        include_once(FUNCTIONS);     
     }
 }
