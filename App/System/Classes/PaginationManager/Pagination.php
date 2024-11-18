@@ -1,5 +1,5 @@
 <?php
-namespace App\System\Classes;
+namespace App\System\Classes\PaginationManager;
 use LazarusPhp\DatabaseManager\Database;
 
 class Pagination extends Database
