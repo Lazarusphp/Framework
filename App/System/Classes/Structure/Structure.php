@@ -9,11 +9,15 @@ class Structure extends StructureConfig
         $this->generateRoot();
         $this->generatePaths();
     }
+
+    // TODO: Remove this method No longer needed
     public function __set($name, $path)
     {
         $this->paths[$name] = $path;
         $this->newConstant($name, $path);
     }
+
+    // TODO: Remove this method No longer needed
     public function __get($name)
     {
         if(array_key_exists($this->paths,$name))
@@ -21,15 +25,17 @@ class Structure extends StructureConfig
             return $this->paths[$name];
         }
     }
-    // Want to add a Path on the Fly use AddPath
+    
+    //TODO Remove this method
     public function addPath($name, $path)
     {
         $this->paths[$name] = $path;
         $this->newConstant($name, $path);
     }
     // Load Paths
- 
-    public function hasFile($name)
+
+
+    public function hasFile($name)  :bool  
     {
         if (file_exists($name) && is_file($name)) {
             return true;
@@ -37,7 +43,8 @@ class Structure extends StructureConfig
             return false;
         }
     }
-    public function hasDirectory($name)
+
+    public function hasDirectory($name):bool
     {
         //   echo "<ol>";
         if (!is_file($name)) {

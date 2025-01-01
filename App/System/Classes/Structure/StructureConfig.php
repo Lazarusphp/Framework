@@ -7,6 +7,7 @@ class StructureConfig
     protected $root;
     protected $paths = [];
 
+    // TODO: Remove this method No longer needed
     protected function newConstant($name, $value)
     {  $name = strtoupper($name); {
         if(!defined($name))
@@ -14,6 +15,7 @@ class StructureConfig
         }
     }
 
+    // TODO Will remove this method completly because it is not needed
     public function loadPaths()
     {
         // Dynamically Generate Defines
@@ -24,12 +26,14 @@ class StructureConfig
         }
     }
 
+    // TODO Modify this path to use the new INI Format
     public function countPaths()
     {
         return count($this->paths);
     }
     // generate Predefines Paths 
 
+//   TODO: Remove this method
     protected function generatePaths()
     {
         $this->paths = [
@@ -60,6 +64,7 @@ class StructureConfig
                 }
         }
 
+        define("ROOT", $this->root);
         return $this->root;
     }
 }
