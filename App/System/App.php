@@ -15,32 +15,44 @@ class App
     public $root;
     public $paths;
     public $path;
-    public $config = "/Config.php";
+    public $config = "/Config2.php";
     private $structure;
-    private $hashandler;
-    private $sessions;
 
     public function __construct()
       {   
         ini_set("display_errors",1);
         ini_set("display_startup_errors",1);
         error_reporting(E_ALL);
-
         $this->structure = new Structure();
         $this->structure->loadPaths();
         $this->boot();
     }
 
-    public function loadRouter()
-    {
-        include_once(ROUTER);
+    public function loadRouter():void
+    {  
+        $folder = ROOT."/Storage";
+        if($this->structure->hasDirectory($folder) === true)
+        {
+            if(!chmod($folder,0777))
+            {
+                trigger_error("Storage Directory is not writable ");
+            }
+            else
+            { 
+                include_once(ROUTER);
+            }
+       }
+        else
+        {
+            trigger_error("Storage Directory is missing Please Create it");
+        }
+        
     }
 
-    public function boot()
+    public function boot()  :void
     {
-
-        DbConfig::load(CONFIG.$this->config,[PhpWriter::class]);
-        (new Sessions())->instantiate();
-        include_once(FUNCTIONS);     
+            DbConfig::load(CONFIG.$this->config,[PhpWriter::class]);
+            include_once(FUNCTIONS);     
     }
 }
+
