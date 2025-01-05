@@ -1,10 +1,13 @@
 <?php
+
 namespace App\System\Classes\Structure;
+
 use App\System\Classes\ErrorHandler;
 use Closure;
 use FireCore\IniWriter\Handler;
 
 use function PHPSTORM_META\elementType;
+
 class Structure extends StructureConfig
 {
 
@@ -27,7 +30,7 @@ class Structure extends StructureConfig
     }
 
 
-    public static function create($name,$file,array $data):void
+    public static function create($name, $file, array $data): void
     {
         self::$path[$name] = $file;
         // Set new Handler Instance
@@ -35,35 +38,30 @@ class Structure extends StructureConfig
         // Open the Ini file,
         Handler::open($file);
 
-        foreach($data as $key => $value)
-        {
-            Handler::set($name,$key,$value);
+        foreach ($data as $key => $value) {
+            Handler::set($name, $key, $value);
         }
 
         Handler::save();
 
         Handler::close();
-        
     }
-    public static function fetchValue($name,$key):mixed
+    public static function fetchValue($name, $key): mixed
     {
         Handler::open(self::$path[$name]);
-        return Handler::get($name,$key);
+        return Handler::get($name, $key);
     }
 
-
-
-    public static function getPath($name=null)
+    // List All Arrays for the Structure Config $debug must be set to true in order to work else it will trigger an error
+    public static function list($name, $debug = false): void
     {
-        if($name === null)
-        {
-            return self::$path;
+        if ($debug === true) {
+            foreach (self::$data[$name] as $key => $value) {
+                echo $key . "=>" . $value . "<br>";
+            }
+        } else {
+            trigger_error("Debbugging for Config : $name is Not Enabled, and canot list values");
         }
-        else
-        {
-            return self::$path[$name]; 
-        }
-       
     }
 
 
@@ -74,7 +72,7 @@ class Structure extends StructureConfig
     private function defaultIni()
     {
         $this->dir = [
-            "Storage" => ROOT. DIRECTORY_SEPARATOR ."Storage",
+            "Storage" => ROOT . DIRECTORY_SEPARATOR . "Storage",
         ];
 
 
@@ -91,12 +89,11 @@ class Structure extends StructureConfig
     // TODO: Remove this method No longer needed
     public function __get($name)
     {
-        if(array_key_exists($this->paths,$name))
-        {
+        if (array_key_exists($this->paths, $name)) {
             return $this->paths[$name];
         }
     }
-    
+
     //TODO Remove this method
     public function addPath($name, $path)
     {
@@ -111,16 +108,14 @@ class Structure extends StructureConfig
     protected function generateRoot()
     {
 
-        $allowedDir = ["public_html","public","www"];
+        $allowedDir = ["public_html", "public", "www"];
 
-        foreach ($allowedDir as $dir)
-        {
-            if(is_dir("../$dir"))
-                {
-                    $explode = explode(DIRECTORY_SEPARATOR, getcwd());
-                    array_pop($explode);
-                    $this->root = implode(DIRECTORY_SEPARATOR, $explode);
-                }
+        foreach ($allowedDir as $dir) {
+            if (is_dir("../$dir")) {
+                $explode = explode(DIRECTORY_SEPARATOR, getcwd());
+                array_pop($explode);
+                $this->root = implode(DIRECTORY_SEPARATOR, $explode);
+            }
         }
 
         define("ROOT", $this->root);
@@ -128,7 +123,7 @@ class Structure extends StructureConfig
     }
 
 
-    public function hasFile($name)  :bool  
+    public function hasFile($name): bool
     {
         if (file_exists($name) && is_file($name)) {
             return true;
@@ -137,7 +132,7 @@ class Structure extends StructureConfig
         }
     }
 
-    public function hasDirectory($name):bool
+    public function hasDirectory($name): bool
     {
         //   echo "<ol>";
         if (!is_file($name)) {
