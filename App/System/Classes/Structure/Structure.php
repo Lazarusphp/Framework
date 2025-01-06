@@ -2,110 +2,105 @@
 
 namespace App\System\Classes\Structure;
 
+use App\System\App;
 use App\System\Classes\ErrorHandler;
 use Closure;
 use FireCore\IniWriter\Handler;
 
-use function PHPSTORM_META\elementType;
 
 class Structure extends StructureConfig
 {
 
-    private $dir = [];
-    private $pathname = [];
-
-
-    private static $path = [];
-    private static $data = [];
-
-
-
-
-
-    private $iniFile;
+    protected static $toFile;
+    protected static $path;
+    protected static $data = [];
     public function __construct()
     {
         $this->generateRoot();
         $this->generatePaths();
+        self::create("Users",["username"=>"martin","Password"=>"Password"]);
     }
 
-
-    public static function create($name, $file, array $data): void
+    public static function ModifyKey(string $name, string $key, mixed $value, $isfile = false)
     {
-        self::$path[$name] = $file;
-        // Set new Handler Instance
-        self::$data[$name] = $data;
-        // Open the Ini file,
-        Handler::open($file);
-
-        foreach ($data as $key => $value) {
+        if ($isfile === true) {
+            Handler::open(self::$path[$name], true);
             Handler::set($name, $key, $value);
-        }
-
-        Handler::save();
-
-        Handler::close();
-    }
-    public static function fetchValue($name, $key): mixed
-    {
-        Handler::open(self::$path[$name]);
-        return Handler::get($name, $key);
-    }
-
-    // List All Arrays for the Structure Config $debug must be set to true in order to work else it will trigger an error
-    public static function list($name, $debug = false): void
-    {
-        if ($debug === true) {
-            foreach (self::$data[$name] as $key => $value) {
-                echo $key . "=>" . $value . "<br>";
-            }
+            Handler::save();
+            Handler::close();
         } else {
-            trigger_error("Debbugging for Config : $name is Not Enabled, and canot list values");
+            if (array_key_exists($key, self::$data[$name])) {
+                self::$data[$name][$key] = $value;
+            } else {
+                Self::$data[$name][$key] = $value;
+            }
+
         }
     }
 
 
-
-
-
-    //TODO:  Generate an array to t ie in with the INI File Class
-    private function defaultIni()
+    public static function create(string $name, array $data, $toFile=""): void
     {
-        $this->dir = [
-            "Storage" => ROOT . DIRECTORY_SEPARATOR . "Storage",
-        ];
+        // Generate Array
+        self::$data[$name] = $data;
+     
+        // Save to Ini File.
 
+        if($toFile !== "")
+        {
+            echo "saving to file";
+            self::$path[$name] = $toFile;
+            self::$toFile = true;
+            // Open the file
+            Handler::open(self::$path[$name]);
+            foreach ($data as $key => $value) {
+                Handler::set($name, $key, $value);
+            }
 
-        var_dump($this->dir);
-    }
-
-    // TODO: Remove this method No longer needed
-    public function __set($name, $path)
-    {
-        $this->paths[$name] = $path;
-        $this->newConstant($name, $path);
-    }
-
-    // TODO: Remove this method No longer needed
-    public function __get($name)
-    {
-        if (array_key_exists($this->paths, $name)) {
-            return $this->paths[$name];
+            // Save File
+            Handler::save();
+            // Close the  Handler
+            Handler::close();
         }
+        else
+        {
+            self::$toFile = false;
+            foreach (self::$data[$name] as $key => $value) {
+                self::$data[$name][$key] = $value;
+            }
+        }   
+        
+   
     }
-
-    //TODO Remove this method
-    public function addPath($name, $path)
+    public static function fetch(string $name, mixed $key,$file="")
     {
-        $this->paths[$name] = $path;
-        $this->newConstant($name, $path);
-    }
-    // Load Paths
-
-
+        if($file !== "")
+        {
+            self::$path[$name] = $file;
+            self::$toFile = true;
+        }
+            if (self::$toFile === true) {
+                    if($file !== "")
+                    {
+                        self::$path[$name] = $file;
+                    }
+                    Handler::open(self::$path[$name]);
+                    return Handler::get($name, $key);
+            }
+            else
+            {
+                if(array_key_exists($key,self::$data[$name])){
+                return self::$data[$name][$key];
+                }
+                else
+                {
+                    trigger_error("Key $key does not exist in the Array");
+                }
+            }
+        }
     //Todo Add Private Generate Root path Here
 
-    protected function generateRoot()
+    protected function generateRoot():void
     {
 
         $allowedDir = ["public_html", "public", "www"];
@@ -119,7 +114,6 @@ class Structure extends StructureConfig
         }
 
         define("ROOT", $this->root);
-        return $this->root;
     }
 
 
