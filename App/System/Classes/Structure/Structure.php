@@ -11,9 +11,10 @@ use FireCore\IniWriter\Handler;
 class Structure extends StructureConfig
 {
 
-    protected static $toFile;
-    protected static $path;
-    protected static $data = [];
+    private static $path;
+    private static $data = [];
+    
+    private static $toFile = [];
     public function __construct()
     {
         $this->generateRoot();
@@ -50,7 +51,7 @@ class Structure extends StructureConfig
         {
             echo "saving to file";
             self::$path[$name] = $toFile;
-            self::$toFile = true;
+            self::$toFile[$name] = true;
             // Open the file
             Handler::open(self::$path[$name]);
             foreach ($data as $key => $value) {
@@ -64,7 +65,7 @@ class Structure extends StructureConfig
         }
         else
         {
-            self::$toFile = false;
+            self::$toFile[$name] = false;
             foreach (self::$data[$name] as $key => $value) {
                 self::$data[$name][$key] = $value;
             }
@@ -72,18 +73,18 @@ class Structure extends StructureConfig
         
    
     }
-    public static function fetch(string $name, mixed $key,$file="")
+
+    public static function mapPath($file,$name)
     {
-        if($file !== "")
-        {
-            self::$path[$name] = $file;
-            self::$toFile = true;
-        }
-            if (self::$toFile === true) {
-                    if($file !== "")
-                    {
-                        self::$path[$name] = $file;
-                    }
+        self::$path[$name] = $file;
+        self::$toFile[$name] = true;
+    }
+
+
+    public static function fetch(string $name, mixed $key)
+    {
+
+            if (self::$toFile[$name] === true) {
                     Handler::open(self::$path[$name]);
                     return Handler::get($name, $key);
             }
@@ -100,7 +101,7 @@ class Structure extends StructureConfig
         }
     //Todo Add Private Generate Root path Here
 
-    protected function generateRoot():void
+    protected  function generateRoot():void
     {
 
         $allowedDir = ["public_html", "public", "www"];
@@ -109,10 +110,11 @@ class Structure extends StructureConfig
             if (is_dir("../$dir")) {
                 $explode = explode(DIRECTORY_SEPARATOR, getcwd());
                 array_pop($explode);
-                $this->root = implode(DIRECTORY_SEPARATOR, $explode);
+                $this->root = implode(DIRECTORY_SEPARATOR, array: $explode);
             }
         }
 
+        // Generate the Root Container;
         define("ROOT", $this->root);
     }
 
