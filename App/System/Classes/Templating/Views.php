@@ -1,8 +1,6 @@
 <?php
 
 namespace  App\System\Classes\Templating;
-
-use App\System\Classes\Date;
 use App\System\Classes\Structure\Structure;
 
 class Views
@@ -15,23 +13,14 @@ class Views
 
     public function __construct()
     {
-        $this->views = VIEWS;
-        $this->cache = CACHE;
+        $this->views = Structure::fetch("Paths","Views");
+        $this->cache = Structure::fetch("Paths","Cache");
         // Create the folders
 
         $this->DetectFolder($this->views);
         $this->DetectFolder($this->cache);
-        $this->preViewArrays();
     }
 
-    public function preViewArrays()
-    {
-        // Add Values here to Pass Before the views are Loaded
-
-        $this->data["structure"] = new Structure();
-        $this->data["date"] = new Date();
-        
-    }
 
     private function DetectFolder($file)
     {
@@ -75,7 +64,7 @@ class Views
     }
 
 
-    public function render($file)
+    public function render($file):bool|string
     {
         $path = $this->views . $file;
         if ($this->ViewExists($path) == true) {
