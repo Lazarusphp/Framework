@@ -8,7 +8,7 @@ use Closure;
 use FireCore\IniWriter\Handler;
 
 
-class Structure extends StructureConfig
+class Structure
 {
 
     private static $path;
