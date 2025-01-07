@@ -15,10 +15,10 @@ class Structure
     private static $data = [];
     
     private static $toFile = [];
+    private static $root;
     public function __construct()
     {
         $this->generateRoot();
-        $this->generatePaths();
         self::create("Users",["username"=>"martin","Password"=>"Password"]);
     }
 
@@ -101,7 +101,7 @@ class Structure
         }
     //Todo Add Private Generate Root path Here
 
-    protected  function generateRoot():void
+    protected static function generateRoot():void
     {
 
         $allowedDir = ["public_html", "public", "www"];
@@ -110,16 +110,16 @@ class Structure
             if (is_dir("../$dir")) {
                 $explode = explode(DIRECTORY_SEPARATOR, getcwd());
                 array_pop($explode);
-                $this->root = implode(DIRECTORY_SEPARATOR, array: $explode);
+                self::$root = implode(DIRECTORY_SEPARATOR, array: $explode);
             }
         }
 
         // Generate the Root Container;
-        define("ROOT", $this->root);
+        define("ROOT", self::$root);
     }
 
 
-    public function hasFile($name): bool
+    public static function hasFile($name): bool
     {
         if (file_exists($name) && is_file($name)) {
             return true;
@@ -128,7 +128,7 @@ class Structure
         }
     }
 
-    public function hasDirectory($name): bool
+    public static function hasDirectory($name): bool
     {
         //   echo "<ol>";
         if (!is_file($name)) {
