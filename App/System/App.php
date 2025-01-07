@@ -9,13 +9,11 @@ use LazarusPhp\DatabaseManager\ConfigLoader;
 use LazarusPhp\DatabaseManager\ConfigWriters\PhpWriter;
 use LazarusPhp\DatabaseManager\DbConfig;
 use LazarusPhp\SessionManager\Sessions;
+use MiladRahimi\PhpRouter\Routing\Route;
 
-class App
-{
-    public $root;
-    public $paths;
-    public $path;
-    public $config = "/Config2.php";
+class App  extends Structure
+{    public $config = "/Config2.php";
+   
     private $structure;
 
     public function __construct()
@@ -23,15 +21,16 @@ class App
         ini_set("display_errors",1);
         ini_set("display_startup_errors",1);
         error_reporting(E_ALL);
-        $this->structure = new Structure();
-        $this->structure->loadPaths();
+        self::generateRoot();
+        // AutoLoad the Path before Calling the file.
+        self::mapPath(ROOT."/Storage/Paths.ini","Paths");
         $this->boot();
     }
 
     public function loadRouter():void
     {  
         $folder = ROOT."/Storage";
-        if($this->structure->hasDirectory($folder) === true)
+        if(self::hasDirectory($folder) === true)
         {
             if(!chmod($folder,0777))
             {
@@ -39,7 +38,8 @@ class App
             }
             else
             { 
-                include_once(ROUTER);
+                // echo self::fetch("Paths","Router");
+                include_once(self::fetch("Paths","Router"));
             }
        }
         else
@@ -51,8 +51,9 @@ class App
 
     public function boot()  :void
     {
-            DbConfig::load(CONFIG.$this->config,[PhpWriter::class]);
-            include_once(FUNCTIONS);     
+            DbConfig::load(self::fetch("Paths","Config").$this->config,[PhpWriter::class]);
+            // self::loadStructure();
+            include_once(self::fetch("Paths","Functions"));
     }
 }
 
