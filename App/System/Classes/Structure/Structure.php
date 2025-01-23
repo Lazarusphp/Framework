@@ -19,7 +19,6 @@ class Structure
     public function __construct()
     {
         $this->generateRoot();
-        self::create("Users",["username"=>"martin","Password"=>"Password"]);
     }
 
     public static function ModifyKey(string $name, string $key, mixed $value, $isfile = false)

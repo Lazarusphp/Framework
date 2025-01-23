@@ -23,37 +23,37 @@ class App  extends Structure
         error_reporting(E_ALL);
         self::generateRoot();
         // AutoLoad the Path before Calling the file.
-        self::mapPath(ROOT."/Storage/Paths.ini","Paths");
+        // self::mapPath(ROOT."/Storage/Paths.ini","Paths");
         $this->boot();
     }
 
     public function loadRouter():void
     {  
-        $folder = ROOT."/Storage";
-        if(self::hasDirectory($folder) === true)
-        {
-            if(!chmod($folder,0777))
-            {
-                trigger_error("Storage Directory is not writable ");
-            }
-            else
-            { 
-                // echo self::fetch("Paths","Router");
-                include_once(self::fetch("Paths","Router"));
-            }
-       }
-        else
-        {
-            trigger_error("Storage Directory is missing Please Create it");
-        }
+    //     $folder = ROOT."/Storage";
+    //     if(self::hasDirectory($folder) === true)
+    //     {
+    //         if(!chmod($folder,0777))
+    //         {
+    //             trigger_error("Storage Directory is not writable ");
+    //         }
+    //         else
+    //         { 
+    //             // echo self::fetch("Paths","Router");
+    //             include_once(self::fetch("Paths","Router"));
+    //         }
+    //    }
+    //     else
+    //     {
+    //         trigger_error("Storage Directory is missing Please Create it");
+    //     }
         
     }
 
     public function boot()  :void
     {
-            DbConfig::load(self::fetch("Paths","Config").$this->config,[PhpWriter::class]);
-            // self::loadStructure();
-            include_once(self::fetch("Paths","Functions"));
+    //         DbConfig::load(self::fetch("Paths","Config").$this->config,[PhpWriter::class]);
+    //         // self::loadStructure();
+    //         include_once(self::fetch("Paths","Functions"));
     }
 }
 
