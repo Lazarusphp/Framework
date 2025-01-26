@@ -31,7 +31,7 @@
         "laminas/laminas-diactoros": "^2.5",
         "phpmailer/phpmailer": "^6.2",
         "miladrahimi/phprouter": "^5.1",
-        "lazarusphp/databasemanager": "v1.0.1",
+        "lazarusphp/databasemanager": "^v1.0.1",
         "lazarusphp/querybuilder": "^1.0"
     }
 
