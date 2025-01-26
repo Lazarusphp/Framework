@@ -4,4 +4,5 @@ use App\System\App;
 use LazarusPhp\SessionManager\Sessions;
 
 $app = new App();
-$app->loadRouter();
+
+$app->loadouter();
