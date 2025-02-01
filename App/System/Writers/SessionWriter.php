@@ -15,10 +15,9 @@ class SessionWriter Implements SessionHandlerInterface
     ];
     private $date;
 
-
-    public function __construct(array $config = [])
+    public function test()
     {
-        $this->config = $config ?? null;
+        return "Hello World";
     }
 
     public function customBoot():void
@@ -51,7 +50,7 @@ class SessionWriter Implements SessionHandlerInterface
 
     public function write($sessionID,$data):bool
     {
-        $date = "2015-11-22 00:00:00";
+        $date = Date::create("now")->format("Y-m-d H:i:s");
         $params =  [":sessionID"=>$sessionID,":data"=>$data,":expiry"=>$date];
         $query = new QueryBuilder();
         $query->asQuery("REPLACE INTO sessions (session_id,data,expiry) VALUES(:sessionID,:data,:expiry)",$params);
