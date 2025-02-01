@@ -2,17 +2,21 @@
 namespace App\System\Writers;
 use LazarusPhp\DatabaseManager\QueryBuilder;
 use LazarusPhp\DateManager\Date;
-use LazarusPhp\SessionManager\Interfaces\SessionControl;
+use SessionhandlerInterface;
 use PDO;
 
-class SessionWriter implements SessionControl
+class SessionWriter Implements SessionHandlerInterface
 {
 
-    private $config;
+    private $config = [
+        "table"=>"sessions",
+        "expiry"=>1,
+        "format"=>"Y-m-d H:i:s"
+    ];
     private $date;
 
 
-    public function __construct(array $config=null)
+    public function __construct(array $config = [])
     {
         $this->config = $config ?? null;
     }
@@ -28,40 +32,40 @@ class SessionWriter implements SessionControl
             
     }
 
-    public function openQuery():bool
+    public function open($path,$name):bool
     {
         return true;
     }
 
-    public function closeQuery():bool
+    public function close():bool
     {
         return true;
     }
-    public function readQuery($sessionID):mixed
+    public function read(string $sessionID):string | false
     {
         $query = new QueryBuilder();
-        $stmt = $query->sql("SELECT * FROM ".$this->config["table"]." WHERE session_id = :sessionID",[":sessionID"=>$sessionID])
+        $stmt = $query->sql("SELECT * FROM sessions WHERE session_id = :sessionID",[":sessionID"=>$sessionID])
         ->one(PDO::FETCH_ASSOC);
-        return $stmt;
+        return $stmt ? $stmt['data'] : '';
     }
 
-    public function writeQuery($sessionID,$data):bool
+    public function write($sessionID,$data):bool
     {
-        $date = Date::withAddedTime("now","P".$this->config["expiry"]."D")->format($this->config["format"]);
+        $date = "2015-11-22 00:00:00";
         $params =  [":sessionID"=>$sessionID,":data"=>$data,":expiry"=>$date];
         $query = new QueryBuilder();
-        $query->asQuery("REPLACE INTO " . $this->config["table"] . " (session_id,data,expiry) VALUES(:sessionID,:data,:expiry)",$params);
+        $query->asQuery("REPLACE INTO sessions (session_id,data,expiry) VALUES(:sessionID,:data,:expiry)",$params);
         return true;
     } 
-    public function destroyQuery($sessionID): bool
+    public function destroy($sessionID): bool
     {
         $query = new QueryBuilder();
         $params = [":sessionID"=>$sessionID];
-        $query->asQuery("DELETE FROM " . $this->config["table"] . " WHERE session_id=:sessionID",$params);
+        $query->asQuery("DELETE FROM sessions WHERE session_id=:sessionID",$params);
         return true;
     }
 
-    public function gcQuery():void
+    public function gc(int $maxlifetime):int | false
     {
         $expiry = Date::create("now");
         $expiry = $expiry->format("y-m-d h:i:s");
