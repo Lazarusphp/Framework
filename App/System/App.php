@@ -22,6 +22,7 @@ class App  extends Structure
         ini_set("display_startup_errors",1);
         error_reporting(E_ALL);
         self::generateRoot();
+        
         // AutoLoad the Path before Calling the file.
         // self::mapPath(ROOT."/Storage/Paths.ini","Paths");
         $this->boot();
@@ -30,24 +31,16 @@ class App  extends Structure
     public function loadRouter():void
     {  
         $folder = ROOT."/Storage";
-        if(self::hasDirectory($folder) === true)
-        {
-            if(!chmod($folder,0777))
-            {
-                trigger_error("Storage Directory is not writable ");
-            }
-            else
-            { 
-                // echo self::fetch("Paths","Router");
-                include_once(ROOT."/App/System/Router/router.php");
-            }
-       }
+
+        if (!is_writable($folder)) {
+            throw new \RuntimeException('Storage directory is not writable: ' . $folder);
+        }
         else
         {
-            trigger_error("Storage Directory is missing Please Create it");
+            include_once(ROOT."/App/System/Router/router.php");
         }
-        
-    }
+                // echo self::fetch("Paths","Router");
+   }
 
     public function boot()  :void
     {
