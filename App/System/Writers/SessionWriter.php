@@ -11,7 +11,7 @@ class SessionWriter Implements SessionHandlerInterface
     private $config;
     private $date;
 
-    public function __construct(array $config)
+    public function passConfig(array $config)
     {
         $this->config = $config;
         $required = ["days","table"];
