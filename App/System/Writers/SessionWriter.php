@@ -58,11 +58,11 @@ class SessionWriter Implements SessionHandlerInterface
         return true;
     }
 
-    public function gc(int $maxlifetime):int | false
+    public function gc(int $maxlifetime):int|false
     {
         $expiry = Date::create("now");
         $expiry = $expiry->format("y-m-d h:i:s");
-
+        
         try {
             $query = new QueryBuilder();
             $params = [":expiry"=>$expiry];
