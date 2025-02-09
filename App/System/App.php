@@ -4,10 +4,10 @@ namespace App\System;
 use App\System\Classes\Structure\Structure;
 use App\System\Classes\ErrorHandler\Errors;
 use App\System\Classes\Injection\Container;
-use App\System\Classes\PhpWriter as ClassesPhpWriter;
 use LazarusPhp\DatabaseManager\ConfigLoader;
+use Dotenv\Dotenv;
 use LazarusPhp\DatabaseManager\ConfigWriters\PhpWriter;
-use LazarusPhp\DatabaseManager\DbConfig;
+use LazarusPhp\DatabaseManager\Database;
 use LazarusPhp\SessionManager\Sessions;
 use MiladRahimi\PhpRouter\Routing\Route;
 
@@ -44,9 +44,15 @@ class App  extends Structure
 
     public function boot()  :void
     {
-            DbConfig::load(ROOT."/Configs".$this->config,[PhpWriter::class]);
-    //         // self::loadStructure();
-            include_once(ROOT."/App/functions.php");
+        // Instantiate Env file
+        $env_path = ROOT."/.env";
+        if(file_exists($env_path))
+        {
+            $env = Dotenv::createImmutable($env_path);
+            $env->load();
+            $env->required(["type","hostname","username","password","dbname"])->notEmpty();
+        }
+          // include_once(ROOT."/App/functions.php");
     }
 }
 
