@@ -58,7 +58,7 @@ class SessionWriter Implements SessionHandlerInterface
         return true;
     }
 
-    public function gc(int $maxlifetime):int|false
+    public function gc(int $maxlifetime=1400):int|false
     {
         $expiry = Date::create("now");
         $expiry = $expiry->format("y-m-d h:i:s");
@@ -67,8 +67,10 @@ class SessionWriter Implements SessionHandlerInterface
             $query = new QueryBuilder();
             $params = [":expiry"=>$expiry];
             $query->asQuery("DELETE FROM ". $this->config["table"] . "  WHERE expiry  < :expiry",$params);
+            return true;
         } catch (PDOException $e) {
             throw new PDOException($e->getMessage() . $e->getCode());
+            return false;
         }
     }
 
