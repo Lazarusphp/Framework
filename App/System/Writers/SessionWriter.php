@@ -42,7 +42,7 @@ class SessionWriter Implements SessionHandlerInterface
         return $stmt ? $stmt['data'] : '';
     }
 
-    public function write($sessionID,$data):bool
+    public function write(string $sessionID,string $data):bool
     {
         $date = Date::withAddedTime("now","P".$this->config["days"]."D")->format("y-m-d h:i:s");  
         $params =  [":sessionID"=>$sessionID,":data"=>$data,":expiry"=>$date];
@@ -50,7 +50,7 @@ class SessionWriter Implements SessionHandlerInterface
         $query->asQuery("REPLACE INTO ". $this->config["table"] . "  (session_id,data,expiry) VALUES(:sessionID,:data,:expiry)",$params);
         return true;
     } 
-    public function destroy($sessionID): bool
+    public function destroy(string $sessionID): bool
     {
         $query = new QueryBuilder();
         $params = [":sessionID"=>$sessionID];
