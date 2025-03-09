@@ -4,16 +4,13 @@ namespace App\System;
 use App\System\Classes\Structure\Structure;
 use App\System\Classes\ErrorHandler\Errors;
 use App\System\Classes\Injection\Container;
-use LazarusPhp\DatabaseManager\ConfigLoader;
-use Dotenv\Dotenv;
-use FireCore\FileWriter\JsonWriter;
 use LazarusPhp\DatabaseManager\Connection;
-use LazarusPhp\SessionManager\Sessions;
-use MiladRahimi\PhpRouter\Routing\Route;
+use Dotenv\Dotenv;
 use FireCore\FileWriter\Writer;
+use FireCore\FileWriter\JsonWriter;
+use App\Boot;
 
 class App  extends Structure
-{    public $config = "/Config.php";
 
     
    
@@ -64,6 +61,7 @@ class App  extends Structure
     {
         // Instantiate Env file
         $env_path = ROOT;
+        Boot::loadVc();
         if(is_file($env_path."/.env"))
         {
             $env = Dotenv::createImmutable($env_path);
