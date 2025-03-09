@@ -14,16 +14,15 @@ class Requests extends Validation
     private $continue;
 
 
+    public $vname = 'Request Manager';
+    public $vno = '1.0.0';
+    public $lup = "09/03/2025";
+
+
     // Request Constructor
     public function  __construct()
     {
         $this->continue = true;
-        Writer::generate("Versions",function($writer)
-        {
-            $writer->section("RequestManager")->set("Name","RequestsManager");
-            $writer->preventOverwrite()->section("RequestManager")->set("Version","v1.1");
-            $writer->save();
-        });
     }
 
 
