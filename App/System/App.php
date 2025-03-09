@@ -11,9 +11,7 @@ use FireCore\FileWriter\JsonWriter;
 use App\Boot;
 
 class App  extends Structure
-
-    
-   
+{  
     private $structure;
     private $versionControl = false;
 
