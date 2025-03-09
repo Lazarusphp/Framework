@@ -6,27 +6,46 @@ use App\System\Classes\ErrorHandler\Errors;
 use App\System\Classes\Injection\Container;
 use LazarusPhp\DatabaseManager\ConfigLoader;
 use Dotenv\Dotenv;
-use LazarusPhp\DatabaseManager\ConfigWriters\PhpWriter;
+use FireCore\FileWriter\JsonWriter;
 use LazarusPhp\DatabaseManager\Connection;
 use LazarusPhp\SessionManager\Sessions;
 use MiladRahimi\PhpRouter\Routing\Route;
+use FireCore\FileWriter\Writer;
 
 class App  extends Structure
 {    public $config = "/Config.php";
+
+    
    
     private $structure;
+    private $versionControl = false;
 
-    public function __construct()
+    public function __construct($versionControl=false)
       {   
-        ini_set("display_errors",1);
+       ini_set("display_errors",1);
         ini_set("display_startup_errors",1);
         error_reporting(E_ALL);
+        if($versionControl == false)
+        {
+            $this->versionControl = false;
+        }
+        else
+        {
+            $this->versionControl = true;
+        }
         self::generateRoot();
         
         // AutoLoad the Path before Calling the file.
         // self::mapPath(ROOT."/Storage/Paths.ini","Paths");
+        Writer::bind("Versions",ROOT."/Storage/Versions.json",[JsonWriter::class]);
         $this->boot();
     }
+
+    public function versionControl()
+    { 
+        return $this->versionControl;
+    }
+    
 
     public function loadRouter():void
     {  
@@ -52,6 +71,9 @@ class App  extends Structure
             $env->required(["type","hostname","username","dbname"])->notEmpty();
             $env->required("password");
         }
+
+        //TODO Move Instantiation class somewhere else
+        Connection::instantiate("env");
         include_once(ROOT."/App/functions.php");
         }
 }
