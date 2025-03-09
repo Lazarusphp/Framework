@@ -4,6 +4,7 @@ namespace App\System\Classes\Security;
 
 use App\System\Classes\Requests\Requests;
 use App\System\Classes\Validation\Validation;
+use FireCore\FileWriter\Writer;
 
 class Security
 {
@@ -15,6 +16,12 @@ class Security
     {
         // Generate a New Token
         $this->token = bin2hex(random_bytes(32));
+        Writer::generate("Versions",function($writer)
+        {
+            $writer->section("SecurityManager")->set("Name","SecurityManager");
+            $writer->section("SecurityManager")->set("Version","v1.0");
+            $writer->save();
+        });
     }
 
     public function getToken()

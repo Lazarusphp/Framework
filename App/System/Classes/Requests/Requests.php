@@ -3,18 +3,14 @@
 namespace App\System\Classes\Requests;
 
 use App\System\Classes\ErrorHandler;
-use App\System\Classes\Validation\Validation; 
+use App\System\Classes\Validation\Validation;
+use FireCore\FileWriter\Writer;
 
 class Requests extends Validation
 {
-
-    private $data = [];
     private $params = [];
-    private $post;
+    private $method = [];
     private $name;
-    private $get;
-    private $any;
-
     private $continue;
 
 
@@ -22,43 +18,16 @@ class Requests extends Validation
     public function  __construct()
     {
         $this->continue = true;
+        Writer::generate("Versions",function($writer)
+        {
+            $writer->section("RequestManager")->set("Name","RequestsManager");
+            $writer->preventOverwrite()->section("RequestManager")->set("Version","v1.1");
+            $writer->save();
+        });
     }
 
- 
-    /**
-     * Post Request Method
-     *
-     * @param [type] $name
-     * @return void
-     */
 
-    public function __set($name, $value)
-    {
-        return $this->data[$name] = $value;
-    }
-
-    public function __get($name)
-    {
-        return $this->data[$name];
-    }
-
-    public function __isset($name)
-    {
-        return isset($this->data[$name]);
-    }
-
-    public function unset($name) {
-        unset($this->data[$name]);
-    }
-
-    final public function save($object=true)
-    {
-        // Export as Object 
-        
-        return $object == true ? (object) $this->data : $this->data;
-    }
-
-    public function validateParams($name, $params)
+    public function validateParams($name, string $params)
     {
         $params = $this->explodeParams($params);
 
@@ -66,7 +35,7 @@ class Requests extends Validation
             if ($params->required == true) {
                 if (empty($name)) {
                     $this->continue = false;
-                    ErrorHandler::$error[] = "Required Field: " . $this->name;
+                    $this->error[] = "Reqired Field: value cannot be empty";
                 }
             }
         }
@@ -78,7 +47,7 @@ class Requests extends Validation
                 if($this->hasStrongPassword($name,"uppercase|lowercase|number|specials|min") == false)
                 {
                     $this->continue = false;
-                     ErrorHandler::$error[] = "Passowrd Input Does not Follow Requirments";
+                    $this->error[] = "Passowrd Input Does not Follow Requirments";
                 }
             }
         }
@@ -88,7 +57,7 @@ class Requests extends Validation
             if ($params->email == true) {
                 if (!$this->validateEmail($name)) {
                     $this->continue = false;
-                    ErrorHandler::$error[] = "Valid Email Required for " . $this->name;
+                    $this->error[] = "Valid Email Required for " . $this->name;
                 }
             }
         }
@@ -97,14 +66,14 @@ class Requests extends Validation
     public function post($name, $params = null)
     {
         $this->name = $name;
-        (isset($_POST[$name])) ? $this->post = $_POST[$name] :  $this->post = null;
+        (isset($_POST[$name])) ? $this->method["post"] = $_POST[$name] :  $this->method["post"] = null;
 
         if (!is_null($params)) {
-            $this->validateParams($this->post, $params);
+            $this->validateParams($this->method["post"], $params);
         }
         $this->name = null;
         if ($this->continue == true) {
-            return $this->post;
+            return $this->method["post"];
         } else {
         }
     }
@@ -115,16 +84,16 @@ class Requests extends Validation
      * @param [type] $name
      * @return void
      */
-    public function get($name, $params = null)
+    public function get(string $name, ?string $params=null)
     {
-        (isset($_GET[$name])) ? $this->get = $_GET[$name] :  $this->get = null;
+        (isset($_GET[$name])) ? $this->method["get"] = $_GET[$name] :  $this->method["get"] = null;
 
         if (!is_null($params)) {
-            $this->validateParams($this->get, $params);
+            $this->validateParams($this->method["get"], $params);
         }
 
         if ($this->continue == true) {
-            return $this->get;
+            return $this->method["get"];
         } else {
             echo "failed";
         }
@@ -152,15 +121,15 @@ class Requests extends Validation
 
     public function any($name, $params = null)
     {
-        (isset($_REQUEST[$name])) ? $this->any = $_REQUEST[$name] : $this->any = null;
+        (isset($_REQUEST[$name])) ? $this->method["any"] = $_REQUEST[$name] : $this->method["any"] = null;
 
 
         if (!is_null($params)) {
-            $this->validateParams($this->any, $params);
+            $this->validateParams($this->method["any"], $params);
         }
 
         if ($this->continue == true) {
-            return $this->any;
+            return $this->method["any"];
         } else {
             echo "failed";
         }

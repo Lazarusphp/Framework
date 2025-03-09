@@ -7,6 +7,7 @@ abstract class Validation
 {
     private $pwCheck;
     public $passwordValidate = [];
+    protected $error = [];
 
 
     // Manually Checks two factor Authentication
@@ -27,7 +28,7 @@ abstract class Validation
     }
 
 
-    public function hasStrongPassword($password,$options)
+    public function hasStrongPassword(string|int $password, string $options)
     {
         // Options Support upper lower numbers specials minlength maxlength
 
@@ -54,7 +55,7 @@ abstract class Validation
                 if ($validPw->uppercase == true) {
                     if (!$uppercase) {
                         $this->pwCheck = false;
-                        ErrorHandler::$error[] = "Password Must contain at least one Uppercase Letter";
+                        $this->error[] = "Password Must contain at least one Uppercase Letter";
                     }
                 }
             }
@@ -65,7 +66,7 @@ abstract class Validation
                 {
                     if (!$lowercase) {
                         $this->pwCheck = false;
-                        ErrorHandler::$error[] = "Password Must have at least one lowercase letter";
+                        $this->error[] = "Password Must have at least one lowercase letter";
                     }
                 }
             }
@@ -76,7 +77,7 @@ abstract class Validation
                 {
                     if (!$number) {
                         $this->pwCheck = false;
-                        ErrorHandler::$error[] = "Password must contain at least one number";
+                        $this->error[] = "Password must contain at least one number";
                     }
                 }
             }
@@ -87,7 +88,7 @@ abstract class Validation
                 {
                     if ($length < 8) {
                         $this->pwCheck = false;
-                        ErrorHandler::$error[] = "Password Must be a minimum of 8 Characters";
+                        $this->error[] = "Password Must be a minimum of 8 Characters";
                     }
                 }
             }
@@ -98,7 +99,7 @@ abstract class Validation
                 {
                     if ($length > 20) {
                         $this->pwCheck = false;
-                        ErrorHandler::$error[] = "Password cannit exceed 20 characters";
+                        $this->error[] = "Password cannit exceed 20 characters";
                     }
                 }
             }
@@ -109,7 +110,7 @@ abstract class Validation
                 {
                     if (!$specialChars) {
                         $this->pwCheck = false;
-                        ErrorHandler::$error[] = "Password Must contain at least one Special Character";
+                        $this->error[] = "Password Must contain at least one Special Character";
                     }
                 }
             }
@@ -144,12 +145,33 @@ abstract class Validation
     }
 
 
+    public function validRequest()
+    {
+        if(count($this->error) === 0)
+        {
+            return true;
+        }
+        else
+        {
+            foreach($this->error as $error)
+            {
+                echo $error . "<br>";
+            }
+        }
+    }
+
+
 
     // Valdate Data and forms.
-    public static function safeHtml($name)
+    public function safeHtml(string $name="")
     {
-        $data = stripslashes($name);
-        $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
-        return $data;
+       if(empty($name))
+       {
+        return "Empty Value";
+       }
+       else
+       {
+        return htmlspecialchars($name,ENT_QUOTES,'UTF-8');
+       }
     }
 }
