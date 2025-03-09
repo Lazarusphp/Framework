@@ -11,10 +11,9 @@
     "autoload-dev": {
         "psr-4": {
             "LazarusPhp\\SecurityFramework\\": "Dev/LazarusPhp/SecurityFramework/src",
-            "LazarusPhp\\DatabaseManager\\": "Dev/LazarusPhp/DatabaseManager/src",
             "LazarusPhp\\DateManager\\": "Dev/LazarusPhp/DateManager/src",
-            "LazarusPhp\\SessionManager\\": "Dev/LazarusPhp/SessionManager/src",
-            "FireCore\\DataHandler\\":"Dev/FireCore/DataHandler/src"
+            "FireCore\\FileWriter\\": "Dev/FireCore/FileWriter/src",
+            "LazarusPhp\\SessionManager\\": "Dev/LazarusPhp/SessionManager/src"
         }
     },
     "prefer-stable": true,
@@ -30,9 +29,10 @@
     "require": {
         "php": "^8.0.2",
         "vlucas/phpdotenv": "^5.2",
-        "laminas/laminas-diactoros": "^2.5",
+        "laminas/laminas-diactoros": "^2.26",
         "phpmailer/phpmailer": "^6.2",
-        "miladrahimi/phprouter": "^5.1"
+        "miladrahimi/phprouter": "^5.1",
+        "lazarusphp/databasemanager": "1.1.0"
     }
 
 }
