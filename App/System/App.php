@@ -9,31 +9,23 @@ use Dotenv\Dotenv;
 use FireCore\FileWriter\Writer;
 use FireCore\FileWriter\JsonWriter;
 use App\Boot;
+use App\System\Classes\VersionControl\VersionControl;
+use App\System\Providers\BindProviders;
 
 class App  extends Structure
 {  
     private $structure;
     private $versionControl = false;
-
     public function __construct($versionControl=false)
       {   
-       ini_set("display_errors",1);
-        ini_set("display_startup_errors",1);
-        error_reporting(E_ALL);
-        if($versionControl == false)
-        {
-            $this->versionControl = false;
-        }
-        else
-        {
-            $this->versionControl = true;
-        }
+        require_once("../App/functions.php");
+        iniControl();
+        $versionControl == false ? $this->versionControl = false : $this->versionControl = true;
         self::generateRoot();
-        
-        // AutoLoad the Path before Calling the file.
-        // self::mapPath(ROOT."/Storage/Paths.ini","Paths");
-        Writer::bind("Versions",ROOT."/Storage/Versions.json",[JsonWriter::class]);
-        $this->boot();
+        BindProviders::bind();
+        $this->setEnv();
+        // Instantiate Connection;
+        Connection::instantiate("env");
     }
 
     public function versionControl()
@@ -55,11 +47,10 @@ class App  extends Structure
         }
    }
 
-    public function boot()  :void
-    {
+   private function setEnv()
+   {
         // Instantiate Env file
         $env_path = ROOT;
-        Boot::loadVc();
         if(is_file($env_path."/.env"))
         {
             $env = Dotenv::createImmutable($env_path);
@@ -67,10 +58,6 @@ class App  extends Structure
             $env->required(["type","hostname","username","dbname"])->notEmpty();
             $env->required("password");
         }
-
-        //TODO Move Instantiation class somewhere else
-        Connection::instantiate("env");
-        include_once(ROOT."/App/functions.php");
-        }
+   }
 }
 
