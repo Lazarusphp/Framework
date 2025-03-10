@@ -40,3 +40,18 @@ function slug($slug)
      $time = implode(":",$output);
      return Date::create("now")->format("$date $time");
  }
+
+function iniControl()
+{
+    $errors =[
+        "display_errors"=>1,
+        "display_startup_errors"=>1,
+    ];
+
+    foreach($errors as $key => $error)
+    {
+        ini_set($key,$error);
+    }
+
+    error_reporting(E_ALL);
+}
