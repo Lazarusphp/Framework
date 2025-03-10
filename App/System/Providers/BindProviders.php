@@ -1,8 +1,8 @@
 <?php
 
 namespace App\System\Providers;
-use FireCore\FileWriter\Writer;
-use FireCore\FileWriter\JsonWriter;
+use FireCore\DataHandler\Writer;
+use FireCore\DataHandler\Writers\JsonWriter;
 
 class BindProviders
 {
