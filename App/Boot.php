@@ -6,17 +6,17 @@ use App\System\Classes\Security\Security;
 use App\System\Classes\Requests\Requests;
 use App\System\Classes\Validation\Validation;
 use App\System\Classes\VersionControl\VersionControl;
-use FireCore\FileWriter\Writer;
+use FireCore\DataHandler\Writer;
 
 class Boot
 {
 
     public static function run()
     {
-        $app = new App();
+        $app = new App(false);
         if($app->versionControl())
         {
-           
+           self::loadVc();
         }
         $app->loadRouter();
         // Code to run the application
