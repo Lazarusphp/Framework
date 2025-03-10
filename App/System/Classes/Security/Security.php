@@ -4,7 +4,7 @@ namespace App\System\Classes\Security;
 
 use App\System\Classes\Requests\Requests;
 use App\System\Classes\Validation\Validation;
-use FireCore\FileWriter\Writer;
+use FireCore\DataHandler\Writer;
 
 class Security
 {
