@@ -12,7 +12,7 @@
         "psr-4": {
             "LazarusPhp\\SecurityFramework\\": "Dev/LazarusPhp/SecurityFramework/src",
             "LazarusPhp\\DateManager\\": "Dev/LazarusPhp/DateManager/src",
-            "FireCore\\FileWriter\\": "Dev/FireCore/FileWriter/src",
+            "FireCore\\DataHandler\\": "Dev/FireCore/DataHandler/src",
             "LazarusPhp\\SessionManager\\": "Dev/LazarusPhp/SessionManager/src"
         }
     },
