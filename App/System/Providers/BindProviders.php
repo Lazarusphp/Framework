@@ -1,8 +1,9 @@
 <?php
 
 namespace App\System\Providers;
-use FireCore\DataHandler\Writer;
-use FireCore\DataHandler\Writers\JsonWriter;
+use LazarusPhp\FileCrafter\Writer;
+use LazarusPhp\FileCrafter\Writers\IniWriter;
+use LazarusPhp\FileCrafter\Writers\JsonWriter;
 
 class BindProviders
 {
@@ -13,6 +14,6 @@ class BindProviders
         {
             // Impove on this in the future;
             Writer::bind("Versions",ROOT."/Storage/Versions.json",[JsonWriter::class]);
-        }
+      }
         
 }
