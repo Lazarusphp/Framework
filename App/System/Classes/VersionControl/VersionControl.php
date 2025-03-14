@@ -5,7 +5,7 @@ namespace App\System\Classes\VersionControl;
 class VersionControl
 {
 
-    public $vname = 'Version Manager';
+    public $vname = 'Version_Manager';
 
     public $vno = '1.0.0';
 
