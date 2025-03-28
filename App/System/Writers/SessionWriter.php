@@ -3,6 +3,8 @@ namespace App\System\Writers;
 use LazarusPhp\DatabaseManager\QueryBuilder;
 use LazarusPhp\DateManager\Date;
 use SessionhandlerInterface;
+use Lazarusphp\QueryBuilder\Core;
+use LazarusPhp\QueryBuilder\DbQuery;
 use PDO;
 
 class SessionWriter Implements SessionHandlerInterface
@@ -36,26 +38,20 @@ class SessionWriter Implements SessionHandlerInterface
     }
     public function read(string $sessionID):string | false
     {
-        $query = new QueryBuilder();
-        $stmt = $query->sql("SELECT * FROM ". $this->config["table"] ." WHERE session_id = :sessionID",[":sessionID"=>$sessionID])
-        ->one(PDO::FETCH_ASSOC);
+        $stmt = DbQuery::table($this->config["table"])->select()->where("session_id",$sessionID)->first(PDO::FETCH_ASSOC);
         return $stmt ? $stmt['data'] : '';
     }
 
     public function write(string $sessionID,string $data):bool
     {
         $date = Date::withAddedTime("now","P".$this->config["days"]."D")->format("y-m-d h:i:s");  
-        $params =  [":sessionID"=>$sessionID,":data"=>$data,":expiry"=>$date];
-        $query = new QueryBuilder();
-        $query->asQuery("REPLACE INTO ". $this->config["table"] . "  (session_id,data,expiry) VALUES(:sessionID,:data,:expiry)",$params);
-        return true;
+        $params = ["session_id"=>$sessionID,"data"=>$data,"expiry"=>$date];
+        return DbQuery::table($this->config["table"])->replace($params) ? true : false;
     } 
     public function destroy(string $sessionID): bool
     {
-        $query = new QueryBuilder();
-        $params = [":sessionID"=>$sessionID];
-        $query->asQuery("DELETE FROM ". $this->config["table"] . "  WHERE session_id=:sessionID",$params);
-        return true;
+   
+        return DbQuery::table($this->config["table"])->delete()->where("session_id",$sessionID)->save() ? true : false;
     }
 
     public function gc(int $maxlifetime=1400):int|false
@@ -64,10 +60,7 @@ class SessionWriter Implements SessionHandlerInterface
         $expiry = $expiry->format("y-m-d h:i:s");
         
         try {
-            $query = new QueryBuilder();
-            $params = [":expiry"=>$expiry];
-            $query->asQuery("DELETE FROM ". $this->config["table"] . "  WHERE expiry  < :expiry",$params);
-            return true;
+            return DbQuery::table($this->config["table"])->delete()->where("expiry","<",$expiry) ? true : false;
         } catch (PDOException $e) {
             throw new PDOException($e->getMessage() . $e->getCode());
             return false;
