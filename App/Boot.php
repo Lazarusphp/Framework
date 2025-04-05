@@ -1,24 +1,34 @@
 <?php
 
 namespace App;
+
 use App\System\App;
-use App\System\Classes\Security\Security;
 use App\System\Classes\Requests\Requests;
-use App\System\Classes\Validation\Validation;
 use App\System\Classes\VersionControl\VersionControl;
+use App\System\Writers\SessionWriter;
+use LazarusPhp\LazarusDb\Connection;
+use LazarusPhp\LazarusDb\QueryBuilder;
 use LazarusPhp\FileCrafter\Writer;
+
+use LazarusPhp\SessionManager\Sessions;
+use LazarusPhp\SessionManager\SessionsFactory;
 
 class Boot
 {
 
     public static function run()
     {
-        $app = new App(true);
+        $app = new App();
         if($app->versionControl())
         {
            self::loadVc();
         }
-        
+
+        $app->loadDatabase(ROOT."/Configs/Config.php");
+
+        SessionsFactory::instantiate([SessionWriter::class],["table" => "sessions","days" => 30]);
+        SessionsFactory::set("username","mike");
+
         $app->loadRouter();
         // Code to run the application
     }
