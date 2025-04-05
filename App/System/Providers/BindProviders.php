@@ -2,9 +2,7 @@
 
 namespace App\System\Providers;
 use LazarusPhp\FileCrafter\Writer;
-use LazarusPhp\FileCrafter\Writers\IniWriter;
 use LazarusPhp\FileCrafter\Writers\JsonWriter;
-
 class BindProviders
 {
     // Class implementation goes here
