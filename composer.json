@@ -12,6 +12,7 @@
         "psr-4": {
             "LazarusPhp\\SecurityFramework\\": "Dev/LazarusPhp/SecurityFramework/src",
             "LazarusPhp\\DateManager\\": "Dev/LazarusPhp/DateManager/src",
+            "LazarusPhp\\LazarusDb\\": "Dev/LazarusPhp/LazarusDb/src",
             "LazarusPhp\\SessionManager\\": "Dev/LazarusPhp/SessionManager/src"
         }
     },
@@ -31,8 +32,7 @@
         "laminas/laminas-diactoros": "^2.26",
         "phpmailer/phpmailer": "^6.2",
         "miladrahimi/phprouter": "^5.1",
-        "lazarusphp/databasemanager": "1.1.0",
-        "lazarusphp/filecrafter": "^1.0"
+        "lazarusphp/filecrafter": "v1.0.1"
     }
 
 }
