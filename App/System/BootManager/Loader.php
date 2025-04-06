@@ -30,13 +30,18 @@ class Loader extends Structure
 
     protected static function setEnv()
    {
-        // Instantiate Env file
+        // Instantiate env root directory
         $env_path = ROOT;
+        // Check the file
         if(is_file($env_path."/.env"))
         {
+            // Create Env File
             $env = Dotenv::createImmutable($env_path);
+            // Load Env File
             $env->load();
+            // Required and must not be empty
             $env->required(["type","hostname","username","dbname"])->notEmpty();
+            // Required but can be left empty (not recommended for production servers)
             $env->required("password");
         }
    }
