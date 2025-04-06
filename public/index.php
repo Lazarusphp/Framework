@@ -6,7 +6,7 @@ use App\Boot;
 require(__DIR__ . "/../vendor/autoload.php");
 if (class_exists('App\Boot'))
 {
-    Boot::run();
+    new Boot();
 }
 else
 {
