@@ -6,12 +6,7 @@ use App\System\Classes\ErrorHandler\Errors;
 use App\System\Classes\Injection\Container;
 use LazarusPhp\LazarusDb\Connection;
 use Dotenv\Dotenv;
-use FireCore\FileWriter\Writer;
-use FireCore\FileWriter\JsonWriter;
 use App\Boot;
-use App\System\Classes\VersionControl\VersionControl;
-use App\System\Providers\BindProviders;
-
 class App  extends Structure
 {  
     private $structure;
@@ -22,7 +17,6 @@ class App  extends Structure
         iniControl();
         $versionControl == false ? $this->versionControl = false : $this->versionControl = true;
         self::generateRoot();
-        // BindProviders::bind();
         $this->setEnv();
         // Instantiate Connection;
     }

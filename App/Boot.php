@@ -8,7 +8,6 @@ use App\System\Classes\VersionControl\VersionControl;
 use App\System\Writers\SessionWriter;
 use LazarusPhp\LazarusDb\Connection;
 use LazarusPhp\LazarusDb\QueryBuilder;
-use LazarusPhp\FileCrafter\Writer;
 
 use LazarusPhp\SessionManager\Sessions;
 use LazarusPhp\SessionManager\SessionsFactory;
@@ -27,8 +26,7 @@ class Boot
         $app->loadDatabase(ROOT."/Configs/Config.php");
 
         SessionsFactory::instantiate([SessionWriter::class],["table" => "sessions","days" => 30]);
-        SessionsFactory::set("username","mike");
-
+        SessionsFactory::set("username","mike");;
         $app->loadRouter();
         // Code to run the application
     }
