@@ -19,7 +19,7 @@ class Injector
         return new self();
     }
 
-    public function required(...$classes)
+    public function requires(...$classes)
     {
         foreach ($classes as $class) {
             if (!class_exists($class)) {
@@ -38,7 +38,7 @@ class Injector
         return $this;
     }
 
-    public function save()
+    public function load()
     {
         if (!$this->required) {
             if (class_exists(self::$classname)) {
