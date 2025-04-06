@@ -14,11 +14,17 @@ use LazarusPhp\SessionManager\SessionsFactory;
 class Boot extends Loader
 {
 
+    public function __construct()
+    {
+        require_once("../App/functions.php");
+        iniControl();
+        self::run();
+    }
+
     public static function run()
     {
         // Load class arrays must be in order
-        require_once("../App/functions.php");
-        iniControl();
+    
        self::classLoader("generateRoot","setEnv","loadConnection","loadRouter");
         // Code to run the application
     }
