@@ -4,28 +4,19 @@ namespace App\System\BootManager;
 
 use App\System\Classes\Structure\Structure;
 use LazarusPhp\LazarusDb\Connection;
+use LazarusPhp\SessionManager\SessionsFactory;
+use App\System\Writers\SessionWriter;
 use Dotenv\Dotenv;
 
 class Loader extends Structure
 {
     // Class implementation goes here
 
-
-    public static function classLoader(...$classes)
-    {
-        if(count($classes) >= 1)
-        {
-            foreach($classes as $class)
-            {
-                self::$class();
-            }
-        }
-    }
-
     protected static function loadConnection(string $file="")
     {
         (!empty($file)) ? Connection::file($file) : false;
         Connection::activate();
+       
     }
 
     protected static function setEnv()
@@ -45,6 +36,7 @@ class Loader extends Structure
             $env->required("password");
         }
    }
+
 
    public static function loadRouter():void
    {  
