@@ -19,8 +19,7 @@ class Injector
 
     public function requires(array $classes = [])
     {
-        echo count($classes);
-        if(count($classes) >= 1)
+        if(is_array($classes) && count($classes) >= 1)
         {
             foreach($classes as $class)
             {
