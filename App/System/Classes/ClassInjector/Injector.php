@@ -4,56 +4,51 @@ namespace App\System\Classes\ClassInjector;
 
 class Injector
 {
-    private static $classname;
-    private static $method;
-    private static $args;
-    private $required = false;
-    private $requireClasses = [];
-    private $missingClasses = [];
-    // Class implementation goes here#
+    private $classname;
+    private $required = [];
 
-    public static function inject(string $class, string $method, ...$args)
+    public function __construct(string $classname,callable $functions)
     {
-        self::$classname = $class;
-        self::$method = $method;
-        self::$args = $args;
-        return new self();
-    }
-
-    public function requires(...$classes)
-    {
-        foreach ($classes as $class) {
-            if (!class_exists($class)) {
-                $this->missingClasses[] = "Cannot locate Class $class"; 
-            }
-        }
-
-        if(count($this->missingClasses) >= 1)
+        $this->classname = $classname;
+        if(is_callable($functions))
         {
-            $this->required = true;
-        }
-        else
-        {
-            $this->required = false;
+            $functions($this);
         }
         return $this;
     }
 
-    public function load()
+    public function requires(array $classes = [])
     {
-        if (!$this->required) {
-            if (class_exists(self::$classname)) {
-                if (method_exists(self::$classname, self::$method)) {
-                    return call_user_func_array([self::$classname, self::$method], self::$args);
+        echo count($classes);
+        if(count($classes) >= 1)
+        {
+            foreach($classes as $class)
+            {
+                if(!class_exists($class))
+                {
+                    $this->required[] = "Class is Required $class";   
                 }
             }
         }
         else
         {
-            foreach($this->missingClasses as $message)
-            {
-                trigger_error($message);
-            }
+            echo "This method cannot be used with no class parameters loaded";
         }
     }
+
+    public function save()
+    {
+        if(count($this->required) >= 1)
+        {
+            foreach($this->required as $class)
+            {
+                echo $class;
+            }
+        }
+        else
+        {
+            echo "We can Continue";
+        }
+    }
+
 }
