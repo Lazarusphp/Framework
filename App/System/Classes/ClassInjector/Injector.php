@@ -8,6 +8,7 @@ class Injector
     private static $method;
     private static $args;
     private $required = false;
+    private $requireClasses = [];
     private $missingClasses = [];
     // Class implementation goes here#
 
