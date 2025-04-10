@@ -13,6 +13,7 @@
             "LazarusPhp\\SecurityFramework\\": "Dev/LazarusPhp/SecurityFramework/src",
             "LazarusPhp\\DateManager\\": "Dev/LazarusPhp/DateManager/src",
             "LazarusPhp\\LazarusDb\\": "Dev/LazarusPhp/LazarusDb/src",
+            "LazarusPhp\\FileCrafter\\": "Dev/LazarusPhp/FileCrafter/src",
             "LazarusPhp\\SessionManager\\": "Dev/LazarusPhp/SessionManager/src"
         }
     },
@@ -31,8 +32,7 @@
         "vlucas/phpdotenv": "^5.2",
         "laminas/laminas-diactoros": "^2.26",
         "phpmailer/phpmailer": "^6.2",
-        "miladrahimi/phprouter": "^5.1",
-        "lazarusphp/filecrafter": "v1.0.1"
+        "miladrahimi/phprouter": "^5.1"
     }
 
 }
