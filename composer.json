@@ -10,12 +10,11 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "LazarusPhp\\SecurityFramework\\": "Dev/LazarusPhp/SecurityFramework/src",
-            "LazarusPhp\\DateManager\\": "Dev/LazarusPhp/DateManager/src",
-            "LazarusPhp\\LazarusDb\\": "Dev/LazarusPhp/LazarusDb/src",
-            "LazarusPhp\\FileCrafter\\": "Dev/LazarusPhp/FileCrafter/src",
-            "LazarusPhp\\SessionManager\\": "Dev/LazarusPhp/SessionManager/src"
-        }
+            "LazarusPhp\\SecurityFramework\\": "Dev/SecurityFramework/src",
+            "LazarusPhp\\DateManager\\": "Dev/DateManager/src",
+            "LazarusPhp\\LazarusDb\\": "Dev/LazarusDb/src",
+            "LazarusPhp\\FileCrafter\\": "Dev/FileCrafter/src"
+         }
     },
     "prefer-stable": true,
     "authors": [
@@ -32,7 +31,8 @@
         "vlucas/phpdotenv": "^5.2",
         "laminas/laminas-diactoros": "^2.26",
         "phpmailer/phpmailer": "^6.2",
-        "miladrahimi/phprouter": "^5.1"
+        "miladrahimi/phprouter": "^5.1",
+        "lazarusphp/sessionmanager": "1.1.3"
     }
 
 }
