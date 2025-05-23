@@ -60,7 +60,7 @@ function dd($value,$json=false)
 {
     if($json==true){
         header("content-type:application/json");
-        return json_encode($value,JSON_PRETTY_PRINT);
+        echo json_encode($value,JSON_PRETTY_PRINT);
     }
     else{
     echo '<pre>';
