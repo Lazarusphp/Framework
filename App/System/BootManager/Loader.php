@@ -3,9 +3,7 @@
 namespace App\System\BootManager;
 
 use App\System\Classes\Structure\Structure;
-use LazarusPhp\LazarusDb\Connection;
-use LazarusPhp\SessionManager\SessionsFactory;
-use App\System\Writers\SessionWriter;
+use LazarusPhp\LazarusDb\Database\Connection;
 use Dotenv\Dotenv;
 
 class Loader extends Structure
@@ -14,7 +12,7 @@ class Loader extends Structure
 
     protected static function loadConnection(string $file="")
     {
-        (!empty($file)) ? Connection::file($file) : false;
+        // (!empty($file)) ? Connection::file($file) : false;
         Connection::activate();
        
     }
