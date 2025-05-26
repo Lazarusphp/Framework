@@ -6,7 +6,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "App/",
-            "Schemas\\":"Schemas/"
+            "Migrations\\":"Migrations/"
         }
     },
     "autoload-dev": {
@@ -36,6 +36,20 @@
         "lazarusphp/filecrafter": "^v1.0.1",
         "lazarusphp/lazarusdb": "^v1.1.1",
         "lazarusphp/sessionmanager": "^v1.1.2"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "if [ ! -f .env ]; then mv .env.example .env; else echo .env already exists; fi",
+            "if [ ! -f lazarus ]; then mv lazarus.example lazarus; else echo lazarus already exists; fi",
+            "chmod +x lazarus",
+            "echo install Complete"
+        ],
+        "post-update-cmd": [
+            "if [ ! -f lazarus ]; then mv lazarus.example lazarus; else echo lazarus already exists; fi",
+            "chmod +x lazarus",
+            "echo Update complete"
+
+        ]
     }
 
 }
