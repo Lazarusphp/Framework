@@ -32,11 +32,6 @@ class Boot extends Loader
 
         $session = new Sessions();
         $session->instantiate([SessionWriter::class],["days"=>365,"httponly"=>false,"secure"=>false]);
-        
-        // self::loadRouter();
-        $scandir = ROOT . "/Schemas";
-        SchemaLoader::load($scandir);
-
-     
+    
     }
 }
