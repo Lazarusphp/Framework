@@ -1,0 +1,57 @@
+<?php
+namespace Schemas;
+
+use App\System\Classes\ErrorHandler\ErrorTest;
+use LazarusPhp\LazarusDb\CoreFiles\SchemaCore;
+use LazarusPhp\LazarusDb\Database\Connection;
+use LazarusPhp\LazarusDb\SchemaBuilder\Interfaces\SchemaLoaderInterface;
+use LazarusPhp\LazarusDb\SchemaBuilder\BluePrint;
+use LazarusPhp\LazarusDb\SchemaBuilder\Schema;
+use ReflectionClass;
+
+class SchemaExample implements SchemaLoaderInterface
+{
+
+    public function up(string $table):void
+    {
+        // Must have data in it.
+     Schema::table($table)->create(function($table)
+        {
+            $table->int("id")->unsigned();
+            $table->int("uid");
+            $table->int("age")->unsigned();
+            $table->varchar("username2");
+            $table->varchar("password")->nullable();
+            $table->varchar("username");
+        });
+    }
+
+    /**
+     * Drop Schema Table
+     *
+     * @method drop
+     * @param string $table
+     * Drops table if needed
+     * @return void
+     */
+    public function down(string $table):void
+    { 
+        if(count(Schema::$migrationError) >= 1)
+        {
+            // Display errors if any
+            echo "<h1>Errors</h1>";
+            foreach(Schema::$migrationError as $error)
+            {
+                echo $error. PHP_EOL;
+            }
+
+            // Additional logic to drop the table if needed
+            if(Schema::table($table)->drop())
+            {
+                echo "Table $table Dropped";
+            }
+        }
+
+    }
+}
+
