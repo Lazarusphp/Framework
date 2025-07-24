@@ -1,0 +1,44 @@
+#!/usr/bin/env php
+<?php
+require_once __DIR__ . '/vendor/autoload.php'; // or your bootstrap file
+use LazarusPhp\LazarusDb\SchemaBuilder\SchemaLoader;
+use LazarusPhp\LazarusDb\Database\Connection;
+use Dotenv\Dotenv;
+
+if (php_sapi_name() !== 'cli') {
+    exit("This script can only be run from the command line.\n");
+} {
+    include_once(__DIR__."/App/functions.php");
+    $argv = $_SERVER['argv'];
+    $command = $argv[1] ?? null;
+    $params = array_slice($argv, 2);
+
+    $env_path = __DIR__;
+    // Check the file
+    if (is_file($env_path . "/.env")) {
+        // Create Env File
+        $env = Dotenv::createImmutable($env_path);
+        // Load Env File
+        $env->load();
+        // Required and must not be empty
+        $env->required(["type", "hostname", "username", "dbname"])->notEmpty();
+        // Required but can be left empty (not recommended for production servers)
+        $env->required("password");
+    }
+
+    Connection::activate();
+
+    switch ($command) {
+        case 'migrate':
+            $dir = __DIR__ . "/Migrations/Schemas";
+            SchemaLoader::load($dir);
+            break;
+        case 'alter':
+              $dir = __DIR__ . "/Migrations/Schemas";
+              SchemaLoader::load($dir,"alter");
+            break;
+        default:
+            echo "Unknown command: $command";
+            break;
+    }
+}
