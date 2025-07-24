@@ -11,6 +11,7 @@ if (php_sapi_name() !== 'cli') {
     include_once(__DIR__."/App/functions.php");
     $argv = $_SERVER['argv'];
     $command = $argv[1] ?? null;
+    $filename = $argv[2] ?? null;
     $params = array_slice($argv, 2);
 
     $env_path = __DIR__;
