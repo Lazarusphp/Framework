@@ -10,8 +10,9 @@ if (php_sapi_name() !== 'cli') {
 } {
     include_once(__DIR__."/App/functions.php");
     $argv = $_SERVER['argv'];
-    $command = $argv[1] ?? null;
-    $filename = $argv[2] ?? null;
+    $command = $argv[1] ?? "";
+    $filename = $argv[2] ?? "";
+    $filename = ucfirst($filename);
     $params = array_slice($argv, 2);
 
     $env_path = __DIR__;
@@ -29,14 +30,19 @@ if (php_sapi_name() !== 'cli') {
 
     Connection::activate();
 
+    echo $filename;
     switch ($command) {
         case 'migrate':
             $dir = __DIR__ . "/Migrations/Schemas";
-            SchemaLoader::load($dir);
+            SchemaLoader::load($dir,"up", $filename);
             break;
         case 'alter':
               $dir = __DIR__ . "/Migrations/Schemas";
-              SchemaLoader::load($dir,"alter");
+              SchemaLoader::load($dir,"alter",$filename);
+            break;
+        case 'down':
+            $dir = __DIR__ . "/Migrations/Schemas";
+            SchemaLoader::load($dir, "down", $filename);
             break;
         default:
             echo "Unknown command: $command";
