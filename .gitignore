@@ -6,6 +6,4 @@ Dev
 /Migrations/Schemas/*.php
 .idea
 composer.lock
-App/Http/Model/Tests
-Storage
 *.Identifier
