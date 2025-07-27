@@ -33,6 +33,6 @@ class Boot extends BootLoader
         // $session->instantiate([SessionWriter::class],["days"=>365,"httponly"=>false,"secure"=>false]);
     
 
-        SchemaLoader::load(__DIR__."/../Migrations/Schemas");
+        // SchemaLoader::load(__DIR__."/../Migrations/Schemas");
     }
 }
