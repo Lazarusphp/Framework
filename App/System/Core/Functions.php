@@ -19,7 +19,7 @@ class Functions
         "date.timezone" => "GMT"
     ];
 
-    function now($time="hours|minute")
+   public static function now($time="hours|minute")
  {
      $timedformat = [];
 //     Current Format is utc
@@ -50,10 +50,10 @@ class Functions
      return Date::create("now")->format("$date $time");
  }
 
- function iniControl()
+ public static function iniControl()
 {
     $errors = self::$iniConfig;
-
+    
     foreach($errors as $key => $error)
     {
         ini_set($key,$error);
@@ -62,7 +62,7 @@ class Functions
     error_reporting(E_ALL);
 }
 
-function dd($value,$json=false)
+public static function dd($value,$json=false)
 {
     if($json==true){
         header("content-type:application/json");
@@ -75,12 +75,12 @@ function dd($value,$json=false)
 }
 }
 
-function slug($slug)
+public function slug($slug)
 {
     return str_replace(" ","-",$slug);
 }
 
- function redirect($location)
+ public static function redirect($location)
 {
      header("location:/$location");
 }
