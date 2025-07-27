@@ -1,0 +1,7 @@
+/**
+ * This folder is intended to store documentation README files for the project.
+ * 
+ * The presence of the `.gitkeep` file ensures that this directory is tracked by git,
+ * even if it does not contain any other files yet. This is useful for maintaining
+ * the project's documentation structure in version control.
+ */
