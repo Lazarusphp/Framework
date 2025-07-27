@@ -19,9 +19,7 @@ class Boot extends BootLoader
 
     public function __construct()
     {
-        $functions = new Functions();
-
-        $functions->iniControl();
+        Functions::iniControl();
         self::generateRoot();
         self::setEnv();
         // Get Connection Status
