@@ -3,8 +3,7 @@ Dev
 /Configs
 .env
 .vscode
-public/test.php
-public/testsub.php
+/Migrations/Schemas/*.php
 .idea
 composer.lock
 App/Http/Model/Tests
