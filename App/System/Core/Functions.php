@@ -26,6 +26,11 @@ class Functions
     $date = "y-m-d";
 //    $time = "h:i:s";
     $explode = explode("|",$time);
+    if(!isset($output))
+    {
+        $output = [];
+    }
+    
     foreach ($explode as $t)
     {
         $timedformat[$t] = true;
