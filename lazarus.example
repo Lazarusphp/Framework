@@ -3,12 +3,12 @@
 require_once __DIR__ . '/vendor/autoload.php'; // or your bootstrap file
 use LazarusPhp\LazarusDb\SchemaBuilder\SchemaLoader;
 use LazarusPhp\LazarusDb\Database\Connection;
+use App\System\Core\Files;
 use Dotenv\Dotenv;
 
 if (php_sapi_name() !== 'cli') {
     exit("This script can only be run from the command line.\n");
 } {
-    include_once(__DIR__."/App/functions.php");
     $argv = $_SERVER['argv'];
     $command = $argv[1] ?? "";
     $filename = $argv[2] ?? "";
@@ -30,7 +30,6 @@ if (php_sapi_name() !== 'cli') {
 
     Connection::activate();
 
-    echo $filename;
     switch ($command) {
         case 'migrate':
             $dir = __DIR__ . "/Migrations/Schemas";
