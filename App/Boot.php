@@ -19,6 +19,7 @@ class Boot extends BootLoader
 
     public function __construct()
     {
+
         Functions::iniControl();
         self::generateRoot();
         self::setEnv();
@@ -29,10 +30,9 @@ class Boot extends BootLoader
          * echoing anything before will get cause errors and warnings.
          */
 
-        // $session = new Sessions();
-        // $session->instantiate([SessionWriter::class],["days"=>365,"httponly"=>false,"secure"=>false]);
-    
-
-        // SchemaLoader::load(__DIR__."/../Migrations/Schemas");
+        $session = new Sessions();
+        $session->instantiate([SessionWriter::class],["days"=>365,"httponly"=>false,"secure"=>false]);
+        
+        SchemaLoader::load(__DIR__."/../Migrations/Schemas","create","profile");
     }
 }
