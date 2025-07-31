@@ -30,9 +30,9 @@
     "require": {
         "php": "^8.0.2",
         "vlucas/phpdotenv": "^5.2",
-        "laminas/laminas-diactoros": "^2.26",
+        "laminas/laminas-diactoros": "^3",
         "phpmailer/phpmailer": "^6.2",
-        "miladrahimi/phprouter": "^5.1",
+        "lazarusphp/phprouter":"^1.0.0",
         "lazarusphp/filecrafter": "^v1.0.1",
         "lazarusphp/lazarusdb": "^v1.1.1",
         "lazarusphp/sessionmanager": "^v1.1.2"
