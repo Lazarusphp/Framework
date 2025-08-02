@@ -7,4 +7,4 @@ Dev
 .idea
 composer.lock
 *.Identifier
-lazarus
+schema
