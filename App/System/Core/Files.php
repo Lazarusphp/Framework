@@ -4,22 +4,27 @@ namespace App\System\Core;
 
 class Files
 {
-    
-    public static function hasFile($name): bool
+
+
+    public static function hasFile(string $name): bool
     {
-        if (file_exists($name) && is_file($name)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (file_exists($name) && is_file($name)) ? true : false;
     }
 
-    public static function hasDirectory($name): bool
+    public static function hasDirectory(string $name): bool;
     {
-        if(is_dir($name) && is_readable($name)) {
-            return true;
-        } else {
-            return false;
+        return (is_dir($name) && is_readable($name)) ? true : false;
+    }
+
+    public function createDirectory(string $name,int $mode = 0755, bool $recursive = true): void
+    {
+        if(is_dir($name) && is_writable($name))
+        {
+            mkdir($name,$mode)
+        }
+        else
+        {
+            // Set Error Handler Here For Directory Failed to Create
         }
     }
 }
