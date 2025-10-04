@@ -12,7 +12,10 @@
     "autoload-dev": {
         "psr-4": {
             "LazarusPhp\\SecurityFramework\\": "Dev/SecurityFramework/src",
+            "LazarusPhp\\LazarusBridge\\":"Dev/LazarusBridge/src",
+            "LazarusPhp\\SchemaBuilder\\":"Dev/SchemaBuilder/src",
             "LazarusPhp\\LazarusDb\\":"Dev/LazarusDb/src",
+            "LazarusPhp\\ErrorHandler\\":"Dev/ErrorHandler/src",
             "LazarusPhp\\DateManager\\": "Dev/DateManager/src",
             "LazarusPhp\\AuthControl\\": "Dev/AuthControl/src"
          }
