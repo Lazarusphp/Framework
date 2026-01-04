@@ -36,20 +36,24 @@
         "laminas/laminas-diactoros": "^3",
         "phpmailer/phpmailer": "^6.2",
         "miladrahimi/phprouter":"^5",
-        "lazarusphp/filecrafter": "^v1.0.1",
         "lazarusphp/lazarusdb": "^v1.1.1",
-        "lazarusphp/sessionmanager": "^v1.1.2"
+        "lazarusphp/sessionmanager": "^v1.1.2",
+        "lazarusphp/openhandler": "^1.0.0"
     },
     "scripts": {
         "post-install-cmd": [
             "if [ ! -f .env ]; then mv .env.example .env; else echo .env already exists; fi",
             "if [ ! -f schema ]; then mv schema.example schema; else echo file schema already exists; fi",
+           "if [ ! -d Storage ]; then mkdir Storage; else echo Storage directory already exists; fi",
+            "chmod -R 0777 Storage",
             "chmod +x schema",
-            "echo install Complete"
+            "echo Install complete"
         ],
         "post-update-cmd": [
             "if [ ! -f .env ]; then mv .env.example .env; else echo .env already exists; fi",
             "if [ ! -f schema ]; then mv schema.example schema; else echo  file schema already exists; fi",
+            "if [ ! -d Storage ]; then mkdir Storage; else echo Storage directory already exists; fi",
+            "chmod -R 0777 Storage",
             "chmod +x schema",
             "echo Update complete"
 
