@@ -5,21 +5,24 @@ use LazarusPhp\LazarusDb\SchemaBuilder\SchemaLoader;
 use LazarusPhp\LazarusDb\Database\Connection;
 use App\System\Core\Files;
 use Dotenv\Dotenv;
+use LazarusPhp\Foundation\PathResolver\Resolve;
 
 if (php_sapi_name() !== 'cli') {
     exit("This script can only be run from the command line.\n");
 } {
+
     $argv = $_SERVER['argv'];
     $command = $argv[1] ?? "";
     $filename = $argv[2] ?? "";
     $filename = ucfirst($filename);
     $params = array_slice($argv, 2);
 
-    $env_path = __DIR__;
-    // Check the file
-    if (is_file($env_path . "/.env")) {
+    Resolve::init(__DIR__);
+    $root = Resolve::get("Root");
+    // Check the filo[-e
+    if (is_file("$root/.env")) {
         // Create Env File
-        $env = Dotenv::createImmutable($env_path);
+        $env = Dotenv::createImmutable($root);
         // Load Env File
         $env->load();
         // Required and must not be empty
@@ -29,18 +32,25 @@ if (php_sapi_name() !== 'cli') {
     }
 
     Connection::activate();
+     
+    
 
     switch ($command) {
+        case 'test':
+            echo Resolve::get("Root");
+                      $dir = $root ."/Migrations/Schemas";
+                      echo "<hr> {$dir}";
+            break;
         case 'migrate':
-            $dir = __DIR__ . "/Migrations/Schemas";
+            $dir = $root."/Migrations/Schemas";
             SchemaLoader::load($dir,"up", $filename);
             break;
-        case 'alter':
-              $dir = __DIR__ . "/Migrations/Schemas";
+        case 'migrate:alter':
+              $dir = $root . "/Migrations/Schemas";
               SchemaLoader::load($dir,"alter",$filename);
             break;
-        case 'down':
-            $dir = __DIR__ . "/Migrations/Schemas";
+        case 'migrate:rollback':
+            $dir = $root ."/Migrations/Schemas";
             SchemaLoader::load($dir, "down", $filename);
             break;
         default:
