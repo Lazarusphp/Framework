@@ -1,18 +1,28 @@
 <?php
-
+ob_start();
 use App\Boot;
-use LazarusPhp\AuthControl\Auth;
-use LazarusPhp\AuthControl\CoreFiles\AuthCore;
-use LazarusPhp\LazarusDb\QueryBuilder;
-use LazarusPhp\SecurityFramework\Hash;
+use App\System\Core\Functions;
+use LazarusPhp\Exceptions\Dispatcher;
+use LazarusPhp\Exceptions\Exceptions\FileNotFoundException;
+use LazarusPhp\Foundation\PathResolver\Resolve;
 
 require(__DIR__ . "/../vendor/autoload.php");
+// Autoload Dispatcher as Global
+Resolve::init(__DIR__,1);
+if(!class_exists(Dispatcher::class))
+{
+    throw new LogicException("CLass Dispatcher Does Not Exist");
+}
 
-if (class_exists('App\Boot'))
+$dispatcher = new Dispatcher();
+set_exception_handler([$dispatcher,'dispatch']);
+
+
+if (!class_exists('App\Boot'))
 {
-    new Boot();
+    throw new FileNotFoundException("Boot Class does not Exist");
 }
-else
-{
-    trigger_error("Boot class not found");
-}
+
+    new Boot($dispatcher);
+
+ob_flush();
