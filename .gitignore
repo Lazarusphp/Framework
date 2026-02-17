@@ -1,10 +1,10 @@
 vendor
 Dev
-/Configs
 .env
 .vscode
 /Migrations/Schemas/*.php
 .idea
 composer.lock
 *.Identifier
-schema
+build
+Storage/*
