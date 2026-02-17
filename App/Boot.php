@@ -2,27 +2,49 @@
 
 namespace App;
 
-use App\Http\Model\Users;
-use App\System\App;
 use App\System\Core\BootLoader;
-use App\System\Core\Functions;
-use LazarusPhp\LazarusDb\Database\Connection;
-use LazarusPhp\LazarusDb\QueryBuilder\QueryBuilder;
-use LazarusPhp\LazarusDb\SchemaBuilder\Schema;
-use LazarusPhp\SessionManager\Sessions;
-use LazarusPhp\SessionManager\Writers\SessionWriter;
-use LazarusPhp\LazarusDb\SchemaBuilder\SchemaLoader;
-use LazarusPhp\LazarusDb\SchemaBuilder\Table;
+use App\System\Core\Strings;
+use LazarusPhp\Exceptions\Dispatcher;
+use LazarusPhp\Exceptions\Listeners\DirectoryNotFoundListener;
+use LazarusPhp\Exceptions\Listeners\FallbackExceptionListener;
+use LazarusPhp\Exceptions\Listeners\FileNotFoundListener;
+use LazarusPhp\Foundation\PathResolver\Resolve;
+use LazarusPhp\Foundation\Validation\Rules;
+use LazarusPhp\Foundation\Validation\StringRules;
+use LazarusPhp\Logger\FileLogger;
+
 
 class Boot extends BootLoader
 {
-
-    public function __construct()
+    public function __construct(Dispatcher $dispatcher)
     {
-
-        Functions::iniControl();
-        self::generateRoot();
+        include_once(Resolve::get("Config")."/Functions.php");
+        LoadIni();
         self::setEnv();
+        $storage = Resolve::get("Storage");
+        $logger = new FileLogger("{$storage}/Logs.txt");
+        $dispatcher->add([
+        new DirectoryNotFoundListener($logger),
+        new FileNotFoundListener($logger),
+        new FallbackExceptionListener($logger),
+        ]);
+    
+            $rules = Rules::create(StringRules::class,["name"=>"test"]);
+
+            $dispatcher->autoloadListeners();
+
+
+
+        
+
+   
+            
+    
+
+
+     
+
+
         // Get Connection Status
         self::loadConnection();
         /**
@@ -30,9 +52,13 @@ class Boot extends BootLoader
          * echoing anything before will get cause errors and warnings.
          */
 
-        $session = new Sessions();
-        $session->instantiate([SessionWriter::class],["days"=>365,"httponly"=>false,"secure"=>false]);
-        
-        SchemaLoader::load(__DIR__."/../Migrations/Schemas","create","profile");
+        // $session = new Sessions();
+        // $session->instantiate([SessionWriter::class], ["days" => 365, "httponly" => false, "secure" => false]);
+        // SchemaLoader::load(__DIR__ . "/../Migrations/Schemas", "up", "profile");
+
+        // $schema = new BridgeValidator("members");
+
+      
+
     }
 }
