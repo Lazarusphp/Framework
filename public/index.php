@@ -1,7 +1,6 @@
 <?php
 ob_start();
 use App\Boot;
-use App\System\Core\Functions;
 use LazarusPhp\Exceptions\Dispatcher;
 use LazarusPhp\Exceptions\Exceptions\FileNotFoundException;
 use LazarusPhp\Foundation\PathResolver\Resolve;
