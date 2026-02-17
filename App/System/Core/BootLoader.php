@@ -3,6 +3,7 @@
 namespace App\System\Core;
 use LazarusPhp\LazarusDb\Database\Connection;
 use Dotenv\Dotenv;
+use LazarusPhp\Foundation\PathResolver\Resolve;
 
 class BootLoader
 {
@@ -34,10 +35,16 @@ class BootLoader
         define("ROOT", self::$root);
     }
 
+    public static function getRoot()
+    {
+        return self::$root;
+        echo self::$root;
+    }
+
     protected static function setEnv()
    {
         // Instantiate env root directory
-        $env_path = ROOT;
+        $env_path = Resolve::get("Root");
         // Check the file
         if(is_file($env_path."/.env"))
         {
