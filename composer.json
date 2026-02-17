@@ -15,10 +15,12 @@
             "LazarusPhp\\LazarusBridge\\":"Dev/LazarusBridge/src",
             "LazarusPhp\\SchemaBuilder\\":"Dev/SchemaBuilder/src",
             "LazarusPhp\\LazarusDb\\":"Dev/LazarusDb/src",
-            "LazarusPhp\\ErrorHandler\\":"Dev/ErrorHandler/src",
+            "LazarusPhp\\Logger\\":"Dev/Logger/src",
             "LazarusPhp\\DateManager\\": "Dev/DateManager/src",
-            "LazarusPhp\\AuthControl\\": "Dev/AuthControl/src"
-         }
+            "LazarusPhp\\AuthControl\\": "Dev/AuthControl/src",
+            "LazarusPhp\\Exceptions\\": "Dev/Exceptions/src",
+            "LazarusPhp\\Foundation\\": "Dev/Foundation/src"    
+        }
     },
     "prefer-stable": true,
     "authors": [
@@ -38,7 +40,8 @@
         "miladrahimi/phprouter":"^5",
         "lazarusphp/lazarusdb": "^v1.1.1",
         "lazarusphp/sessionmanager": "^v1.1.2",
-        "lazarusphp/openhandler": "^1.0.0"
+        "lazarusphp/openhandler": "^1.0.0",
+        "psr/log": "^3.0"
     },
     "scripts": {
         "post-install-cmd": [
@@ -46,7 +49,7 @@
             "if [ ! -f schema ]; then mv schema.example schema; else echo file schema already exists; fi",
            "if [ ! -d Storage ]; then mkdir Storage; else echo Storage directory already exists; fi",
             "chmod -R 0777 Storage",
-            "chmod +x schema",
+            "chmod +x build",
             "echo Install complete"
         ],
         "post-update-cmd": [
@@ -54,8 +57,9 @@
             "if [ ! -f schema ]; then mv schema.example schema; else echo  file schema already exists; fi",
             "if [ ! -d Storage ]; then mkdir Storage; else echo Storage directory already exists; fi",
             "chmod -R 0777 Storage",
-            "chmod +x schema",
+            "chmod +x build",
             "echo Update complete"
+
 
         ]
     }
