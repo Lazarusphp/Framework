@@ -33,12 +33,18 @@ function LoadIni($displayErrors=false)
 
 function env(string $value)
 {
-    if(!isset($_ENV[$value]))
-    {
-        throw new LogicException("Env $value Not Found");
+    try{
+        if(!isset($_ENV[$value]))
+        {
+            throw new LogicException("Env $value Not Found");
+        }
+        else{
+        return $_ENV[$value];
+        }
     }
-    else{
-    return $_ENV[$value];
+    catch(LogicException $e)
+    {
+        return $e->getMessage();
     }
 }
 
