@@ -7,38 +7,9 @@ use LazarusPhp\Foundation\PathResolver\Resolve;
 
 class BootLoader
 {
-    // Class implementation goes here
-    
-    private static $root;
-
-    protected static function loadConnection(string $file="")
+    protected static function loadConnection()
     {
-        // (!empty($file)) ? Connection::file($file) : false;
-        Connection::activate();
-       
-    }
-
-    protected static function generateRoot():void
-    {
-
-        $allowedDir = ["public_html", "public", "www"];
-
-        foreach ($allowedDir as $dir) {
-            if (is_dir("../$dir")) {
-                $explode = explode(DIRECTORY_SEPARATOR, getcwd());
-                array_pop($explode);
-                self::$root = implode(DIRECTORY_SEPARATOR, array: $explode);
-            }
-        }
-
-        // Generate the Root Container;
-        define("ROOT", self::$root);
-    }
-
-    public static function getRoot()
-    {
-        return self::$root;
-        echo self::$root;
+       Connection::activate();
     }
 
     protected static function setEnv()
@@ -62,7 +33,7 @@ class BootLoader
 
    public static function loadRouter():void
    {  
-       $file = ROOT."/App/System/Router/router.php";
+       $file = Resolve::get("Config")."/Router.php";
        if(is_readable($file) && file_exists($file)){
            include_once($file);
        }
