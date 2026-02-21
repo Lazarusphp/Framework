@@ -2,6 +2,7 @@
 
 namespace  App\System\Classes\Templating;
 use App\System\Classes\Structure\Structure;
+use LazarusPhp\Foundation\PathResolver\Resolve;
 
 class Views
 {
@@ -13,8 +14,11 @@ class Views
 
     public function __construct()
     {
-        $this->views = Structure::fetch("Paths","Views");
-        $this->cache = Structure::fetch("Paths","Cache");
+        Resolve::add("Views","Views/");
+        Resolve::add("Cache","Cache/");
+
+        $this->views = Resolve::get("Views");
+        $this->cache = Resolve::get("Cache");
         // Create the folders
 
         $this->DetectFolder($this->views);
@@ -64,7 +68,7 @@ class Views
     }
 
 
-    public function render($file):bool|string
+    public function render($file):self|string
     {
         $path = $this->views . $file;
         if ($this->ViewExists($path) == true) {
