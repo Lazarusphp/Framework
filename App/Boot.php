@@ -18,13 +18,12 @@ use LazarusPhp\Foundation\Validation\StringRules;
 use LazarusPhp\Logger\FileLogger;
 use LogicException;
 
-class Boot extends BootLoader
+class Boot
 {
     public function __construct(Dispatcher $dispatcher)
     {
         include_once(Resolve::get("Config") . "/Functions.php");
-        LoadIni();
-        self::setEnv();
+        // self::setEnv();
         $storage = Resolve::get("Storage");
         $logger = new FileLogger("{$storage}/Logs.txt");
         $dispatcher->add([
@@ -33,7 +32,7 @@ class Boot extends BootLoader
             new FallbackExceptionListener($logger),
         ]);
 
-
+        include_once(Resolve::get("Root")."/Bootloader/Providers.php");
         $dispatcher->autoloadListeners();
 
 
@@ -45,7 +44,7 @@ class Boot extends BootLoader
 
 
         // Get Connection Status
-        self::loadConnection();
+        // self::loadConnection();
         /**
          * load Session Instantiation before load Router
          * echoing anything before will get cause errors and warnings.
