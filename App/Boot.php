@@ -9,6 +9,7 @@ use LazarusPhp\Exceptions\Dispatcher;
 use LazarusPhp\Exceptions\Listeners\DirectoryNotFoundListener;
 use LazarusPhp\Exceptions\Listeners\FallbackExceptionListener;
 use LazarusPhp\Exceptions\Listeners\FileNotFoundListener;
+use LazarusPhp\Foundation\Application\Container;
 use LazarusPhp\Foundation\PathResolver\Resolve;
 use LazarusPhp\Foundation\Validation\ArrayRules;
 use LazarusPhp\Foundation\Validation\FormRules;
@@ -59,4 +60,18 @@ class Boot
 
 
     }
+
+
+    protected function Logger()
+    {
+
+    }
+
+    // Boot Will be the last thing to Load
+    public function boot(Container $container)
+    {
+    }
+
+
+
 }
