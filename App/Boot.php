@@ -61,6 +61,13 @@ class Boot
 
     }
 
+    protected function exceptions()
+    {
+        // Exception Handler and Listerner Will go here;
+
+        $dispatcher->autoloadListerers();
+    }
+
 
     protected function Logger()
     {
