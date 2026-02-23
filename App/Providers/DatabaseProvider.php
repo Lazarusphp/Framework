@@ -15,6 +15,5 @@ class DatabaseProvider implements ProviderInterface
         }
         );
 
-        echo $c->get("db");
     }
 }

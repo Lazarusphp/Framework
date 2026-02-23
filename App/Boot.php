@@ -4,6 +4,7 @@ namespace App;
 
 use App\System\Core\BootLoader;
 use App\System\Core\Strings;
+use Faker\Provider\File;
 use InvalidArgumentException;
 use LazarusPhp\Exceptions\Dispatcher;
 use LazarusPhp\Exceptions\Listeners\DirectoryNotFoundListener;
@@ -21,62 +22,54 @@ use LogicException;
 
 class Boot
 {
-    public function __construct(Dispatcher $dispatcher)
+
+    private FileLogger $logger;
+    private Container $container;
+    public function __construct(Container $container)
     {
+
+        $this->container = $container;
         include_once(Resolve::get("Config") . "/Functions.php");
-        // self::setEnv();
-        $storage = Resolve::get("Storage");
-        $logger = new FileLogger("{$storage}/Logs.txt");
-        $dispatcher->add([
-            new DirectoryNotFoundListener($logger),
-            new FileNotFoundListener($logger),
-            new FallbackExceptionListener($logger),
-        ]);
+       
 
-        include_once(Resolve::get("Root")."/Bootloader/Providers.php");
-        $dispatcher->autoloadListeners();
-
-
-
-
-
-
-
-
-
-        // Get Connection Status
-        // self::loadConnection();
-        /**
-         * load Session Instantiation before load Router
-         * echoing anything before will get cause errors and warnings.
-         */
-
-        // $session = new Sessions();
-        // $session->instantiate([SessionWriter::class], ["days" => 365, "httponly" => false, "secure" => false]);
-        // SchemaLoader::load(__DIR__ . "/../Migrations/Schemas", "up", "profile");
-
-        // $schema = new BridgeValidator("members");
-
+        $this->logger();
+        $this->exceptions();
+        $this->boot();
 
 
     }
 
     protected function exceptions()
     {
+    
         // Exception Handler and Listerner Will go here;
+        if(!class_exists(Dispatcher::class))
+        {
+            throw new LogicException("CLass Dispatcher Does Not Exist");
+        }
 
-        $dispatcher->autoloadListerers();
+        $dispatcher = new Dispatcher();
+        set_exception_handler([$dispatcher,'dispatch']);
+
+         $dispatcher->add([
+            new DirectoryNotFoundListener($this->logger),
+            new FileNotFoundListener($this->logger),
+            new FallbackExceptionListener($this->logger),
+        ]);
+
+        $dispatcher->autoloadListeners();
     }
 
 
     protected function Logger()
     {
-
+        $this->logger = new FileLogger(Resolve::get("Storage")."/Logs.txt");
     }
 
     // Boot Will be the last thing to Load
-    public function boot(Container $container)
+    public function boot(?Container $container=null)
     {
+        echo $this->container->get("db");
     }
 
 
