@@ -15,6 +15,8 @@
             "LazarusPhp\\LazarusBridge\\":"Dev/LazarusBridge/src",
             "LazarusPhp\\SchemaBuilder\\":"Dev/SchemaBuilder/src",
             "LazarusPhp\\LazarusDb\\":"Dev/LazarusDb/src",
+            "LazarusPhp\\Database\\":"Dev/Database/src",
+            "LazarusPhp\\SessionManager\\":"Dev/SessionManager/src",
             "LazarusPhp\\Logger\\":"Dev/Logger/src",
             "LazarusPhp\\DateManager\\": "Dev/DateManager/src",
             "LazarusPhp\\AuthControl\\": "Dev/AuthControl/src",
@@ -39,14 +41,13 @@
         "phpmailer/phpmailer": "^6.2",
         "miladrahimi/phprouter":"^5",
         "lazarusphp/lazarusdb": "^v1.1.1",
-        "lazarusphp/sessionmanager": "^v1.1.2",
         "lazarusphp/openhandler": "^1.0.0",
         "psr/log": "^3.0"
     },
     "scripts": {
         "post-install-cmd": [
             "if [ ! -f .env ]; then mv .env.example .env; else echo .env already exists; fi",
-            "if [ ! -f schema ]; then mv schema.example schema; else echo file schema already exists; fi",
+            "if [ ! -f build ]; then mv build.example build; else echo file build already exists; fi",
            "if [ ! -d Storage ]; then mkdir Storage; else echo Storage directory already exists; fi",
             "chmod -R 0777 Storage",
             "chmod +x build",
@@ -54,7 +55,7 @@
         ],
         "post-update-cmd": [
             "if [ ! -f .env ]; then mv .env.example .env; else echo .env already exists; fi",
-            "if [ ! -f schema ]; then mv schema.example schema; else echo  file schema already exists; fi",
+            "if [ ! -f build ]; then mv build.example schema; else echo  file build already exists; fi",
             "if [ ! -d Storage ]; then mkdir Storage; else echo Storage directory already exists; fi",
             "chmod -R 0777 Storage",
             "chmod +x build",
