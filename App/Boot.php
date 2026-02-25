@@ -2,13 +2,17 @@
 
 namespace App;
 
+use LazarusPhp\Database\Database;
 use LazarusPhp\Exceptions\Dispatcher;
 use LazarusPhp\Exceptions\Listeners\DirectoryNotFoundListener;
 use LazarusPhp\Exceptions\Listeners\FallbackExceptionListener;
 use LazarusPhp\Exceptions\Listeners\FileNotFoundListener;
 use LazarusPhp\Foundation\Providers\Psr\Container;
 use LazarusPhp\Foundation\PathResolver\Resolve;
+use LazarusPhp\LazarusDb\QueryBuilder\QueryBuilder;
 use LazarusPhp\Logger\FileLogger;
+use LazarusPhp\SessionManager\Sessions;
+use LazarusPhp\SessionManager\Writers\SessionWriter;
 use LogicException;
 
 class Boot
@@ -20,12 +24,13 @@ class Boot
     {
         // Include Mandatory Files.
 
-        include_once(__DIR__."/../Config/Functions.php");
+        require_once(__DIR__."/../Config/Helpers/Functions.php");
 
 
         $this->container = $container;
         $this->exceptions();
         $this->boot();
+
 
     }
 
@@ -53,6 +58,26 @@ class Boot
         $dispatcher->autoloadListeners();
     }
 
+
+
+    private function runHelpers()
+    {
+        $helpers = Resolve::get("Helpers");
+
+            $dir = scandir($helpers);
+            foreach($dir as $path)
+            {
+                if(!in_array($path,[".",".."]))
+                {
+                    if(file_exists("$helpers/$path"))
+                    {
+                        include_once("$helpers/$path");
+                    }
+                }
+            }
+
+    }
+
     protected function Logger()
     {
         $this->logger = new FileLogger(Resolve::get("Storage")."/Logs.txt");
@@ -61,7 +86,10 @@ class Boot
     // Boot Will be the last thing to Load
     public function boot()
     {
-        echo $this->container->get("env");;
+        $this->container->get("db");
+        // Auto Include Functions if needed
+        $this->runHelpers();
+        loadRouter();
     }
 
 
