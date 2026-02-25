@@ -13,8 +13,7 @@ class MapProvider implements ProviderInterface
             
             // Create Aditional Folders;
             Resolve::add("Assets","Assets");
+            Resolve::add("Helpers","Config/Helpers");
         });
-
-        
     }
 }
