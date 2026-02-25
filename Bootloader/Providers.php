@@ -7,5 +7,7 @@ use App\Providers\MapProvider;
 use App\Providers\SessionsProvider;
 use LazarusPhp\Foundation\Providers\Providers;
 
-$container = Providers::map([EnvProvider::class,MapProvider::class])->create();
+$container = Providers::map([EnvProvider::class,
+DatabaseProvider::class,
+MapProvider::class])->create();
 new Boot($container);
