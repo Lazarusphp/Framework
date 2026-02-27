@@ -9,5 +9,6 @@ use LazarusPhp\Foundation\Providers\Providers;
 
 $container = Providers::map([EnvProvider::class,
 DatabaseProvider::class,
+SessionsProvider::class,
 MapProvider::class])->create();
 new Boot($container);
