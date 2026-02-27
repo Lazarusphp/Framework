@@ -14,7 +14,7 @@
             "LazarusPhp\\SecurityFramework\\": "Dev/SecurityFramework/src",
             "LazarusPhp\\LazarusBridge\\":"Dev/LazarusBridge/src",
             "LazarusPhp\\SchemaBuilder\\":"Dev/SchemaBuilder/src",
-            "LazarusPhp\\LazarusDb\\":"Dev/LazarusDb/src",
+            "LazarusPhp\\QueryBuilder\\":"Dev/QueryBuilder/src",
             "LazarusPhp\\Database\\":"Dev/Database/src",
             "LazarusPhp\\SessionManager\\":"Dev/SessionManager/src",
             "LazarusPhp\\Logger\\":"Dev/Logger/src",
