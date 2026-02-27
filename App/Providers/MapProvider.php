@@ -4,6 +4,8 @@ namespace App\Providers;
 use LazarusPhp\Foundation\Providers\Interfaces\ProviderInterface;
 use LazarusPhp\Foundation\Providers\Psr\Container;
 use LazarusPhp\Foundation\PathResolver\Resolve;
+use LogicException;
+
 class MapProvider implements ProviderInterface
 {
     public function register(Container $c):void
