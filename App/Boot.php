@@ -2,18 +2,24 @@
 
 namespace App;
 
+use Exception;
+use Faker\Calculator\Ean;
 use LazarusPhp\Database\Database;
+use LazarusPhp\DateManager\Date;
 use LazarusPhp\Exceptions\Dispatcher;
 use LazarusPhp\Exceptions\Listeners\DirectoryNotFoundListener;
 use LazarusPhp\Exceptions\Listeners\FallbackExceptionListener;
 use LazarusPhp\Exceptions\Listeners\FileNotFoundListener;
 use LazarusPhp\Foundation\Providers\Psr\Container;
 use LazarusPhp\Foundation\PathResolver\Resolve;
-use LazarusPhp\LazarusDb\QueryBuilder\QueryBuilder;
+use LazarusPhp\QueryBuilder\QueryBuilder;
 use LazarusPhp\Logger\FileLogger;
 use LazarusPhp\SessionManager\Sessions;
+use LazarusPhp\SessionManager\SessionsFactory;
 use LazarusPhp\SessionManager\Writers\SessionWriter;
 use LogicException;
+use MiladRahimi\PhpRouter\Router;
+use MiladRahimi\PhpRouter\Routing\Route;
 
 class Boot
 {
@@ -71,6 +77,7 @@ class Boot
                 {
                     if(file_exists("$helpers/$path"))
                     {
+                        // echo "$helpers/$path";
                         include_once("$helpers/$path");
                     }
                 }
@@ -86,10 +93,10 @@ class Boot
     // Boot Will be the last thing to Load
     public function boot()
     {
-        $this->container->get("db");
-        // Auto Include Functions if needed
+        $this->container->get("mapper");
+        $this->container->get("sessions");
         $this->runHelpers();
-        loadRouter();
+        Router();
     }
 
 
