@@ -17,10 +17,7 @@ function router()
 
 function session():object|bool
 {
-    if(class_exists(Sessions::class)){
-        return Sessions::create();
-    }
-    return false;
+    return Sessions::create();
 }
 
 function auth()
