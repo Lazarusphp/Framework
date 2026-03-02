@@ -12,16 +12,12 @@
     "autoload-dev": {
         "psr-4": {
             "LazarusPhp\\SecurityFramework\\": "Dev/SecurityFramework/src",
-            "LazarusPhp\\LazarusBridge\\":"Dev/LazarusBridge/src",
             "LazarusPhp\\SchemaBuilder\\":"Dev/SchemaBuilder/src",
             "LazarusPhp\\QueryBuilder\\":"Dev/QueryBuilder/src",
-            "LazarusPhp\\Database\\":"Dev/Database/src",
-            "LazarusPhp\\SessionManager\\":"Dev/SessionManager/src",
             "LazarusPhp\\Logger\\":"Dev/Logger/src",
             "LazarusPhp\\DateManager\\": "Dev/DateManager/src",
-            "LazarusPhp\\AuthControl\\": "Dev/AuthControl/src",
             "LazarusPhp\\Exceptions\\": "Dev/Exceptions/src",
-            "LazarusPhp\\Foundation\\": "Dev/Foundation/src"    
+            "LazarusPhp\\Foundation\\": "Dev/Foundation/src"
         }
     },
     "prefer-stable": true,
@@ -40,9 +36,11 @@
         "laminas/laminas-diactoros": "^3",
         "phpmailer/phpmailer": "^6.2",
         "miladrahimi/phprouter":"^5",
-        "lazarusphp/lazarusdb": "^v1.1.1",
         "lazarusphp/openhandler": "^1.0.0",
-        "psr/log": "^3.0"
+        "psr/log": "^3.0",
+        "lazarusphp/requests": "^1.0.0",
+        "lazarusphp/lazarusdb": "^1.0.0",
+        "lazarusphp/sessionmanager": "v2.0.0"
     },
     "scripts": {
         "post-install-cmd": [
