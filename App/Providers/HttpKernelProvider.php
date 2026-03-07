@@ -1,18 +1,17 @@
 <?php
 namespace App\Providers;
+
 use LazarusPhp\Foundation\Providers\Interfaces\ProviderInterface;
 use LazarusPhp\Foundation\Providers\Psr\Container;
-use LazarusPhp\SessionManager\Sessions;
+use LazarusPhp\Requests\Psr\HttpKernel;
 
-class SessionsProvider implements ProviderInterface
+class HttpKernelProvider implements ProviderInterface
 {
-
     public function register(Container $c):void
     {
-        $c->singleton("sessions",function() use ($c)
+        $c->singleton("httpKernel",function($c)
         {
-            $c->get("db");
-            return Sessions::create()->save();
+            return HttpKernel::boot();
         });
     }
 }
