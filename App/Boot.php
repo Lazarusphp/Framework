@@ -2,24 +2,19 @@
 
 namespace App;
 
+use App\Http\Model\Users;
 use Exception;
-use Faker\Calculator\Ean;
-use LazarusPhp\Database\Database;
-use LazarusPhp\DateManager\Date;
 use LazarusPhp\Exceptions\Dispatcher;
 use LazarusPhp\Exceptions\Listeners\DirectoryNotFoundListener;
 use LazarusPhp\Exceptions\Listeners\FallbackExceptionListener;
 use LazarusPhp\Exceptions\Listeners\FileNotFoundListener;
 use LazarusPhp\Foundation\Providers\Psr\Container;
 use LazarusPhp\Foundation\PathResolver\Resolve;
-use LazarusPhp\QueryBuilder\QueryBuilder;
 use LazarusPhp\Logger\FileLogger;
-use LazarusPhp\SessionManager\Sessions;
-use LazarusPhp\SessionManager\SessionsFactory;
-use LazarusPhp\SessionManager\Writers\SessionWriter;
+use LazarusPhp\QueryBuilder\QueryBuilder;
+use LazarusPhp\Requests\Requests;
 use LogicException;
-use MiladRahimi\PhpRouter\Router;
-use MiladRahimi\PhpRouter\Routing\Route;
+use OutOfBoundsException;
 
 class Boot
 {
@@ -36,7 +31,6 @@ class Boot
         $this->container = $container;
         $this->exceptions();
         $this->boot();
-
 
     }
 
@@ -94,7 +88,11 @@ class Boot
     public function boot()
     {
         $this->container->get("mapper");
+        $this->container->get("httpKernel");
+
         $this->container->get("sessions");
+
+        $users = new QueryBuilder("users")->select()->first();
         $this->runHelpers();
         Router();
     }
