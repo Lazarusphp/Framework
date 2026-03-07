@@ -1,9 +1,22 @@
 <?php
 namespace App\Http\Model;
-use LazarusPhp\QueryBuilder\Core;
+use LazarusPhp\QueryBuilder\Builder;
+use ReflectionClass;
 
-class Model extends Core
+class Model extends Builder
 {
-    protected $allowed = ["email","username"];
-    protected $filtered = ["password"];
+    protected $allowed = [];
+    protected $filtered = [];
+
+    public static function __callStatic($method, $params)
+    {
+         $class = static::class;
+         $class = new ReflectionClass($class)->getShortName();
+         echo strtolower(str_replace(" ","_",$class));
+    }
+
+    public function hello()
+    {
+        echo "Hello";
+    }
 }
