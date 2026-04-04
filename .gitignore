@@ -4,6 +4,7 @@ Dev
 .vscode
 /Migrations/Schemas/*.php
 .idea
+Dev
 composer.lock
 *.Identifier
 build
