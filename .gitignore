@@ -8,5 +8,6 @@ Dev
 Bootstrap/Cache
 composer.lock
 *.Identifier
+Views
 build
 Storage/*

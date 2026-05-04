@@ -1,23 +1,32 @@
 {
     "name": "lazarusphp/framework",
-    "description": "A small slim framework build in php",
+    "description": "A small slim framework app in php",
     "type": "project",
     "license": "GPL",
     "autoload": {
         "psr-4": {
             "App\\": "App/",
-            "Migrations\\":"Migrations/"
+            "Console\\":"Console/",
+            "LazarusPhp\\QueryBuilder\\":"Dev/QueryBuilder/src",
+            "LazarusPhp\\Authentication\\":"Dev/Authentication/src",
+            "LazarusPhp\\Logger\\":"Dev/Logger/src",
+            "LazarusPhp\\DateManager\\": "Dev/DateManager/src",
+            "LazarusPhp\\Exceptions\\": "Dev/Exceptions/src",
+            "LazarusPhp\\SessionManager\\":"Dev/SessionManager/src",
+            "LazarusPhp\\Requests\\":"Dev/Requests/src",
+            "LazarusPhp\\Database\\":"Dev/Database/src",
+            "LazarusPhp\\PathResolver\\":"Dev/PathResolver/src",
+            "LazarusPhp\\Core\\":"Dev/Core/src",
+            "LazarusPhp\\Security\\":"Dev/Security/src",
+            "LazarusPhp\\Templating\\":"Dev/Templating/src",
+            "LazarusPhp\\Console\\":"Dev/Console/src",
+            "LazarusPhp\\ServiceProvider\\":"Dev/ServiceProvider/src"
+
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LazarusPhp\\SecurityFramework\\": "Dev/SecurityFramework/src",
-            "LazarusPhp\\SchemaBuilder\\":"Dev/SchemaBuilder/src",
-            "LazarusPhp\\QueryBuilder\\":"Dev/QueryBuilder/src",
-            "LazarusPhp\\Logger\\":"Dev/Logger/src",
-            "LazarusPhp\\DateManager\\": "Dev/DateManager/src",
-            "LazarusPhp\\Exceptions\\": "Dev/Exceptions/src",
-            "LazarusPhp\\Foundation\\": "Dev/Foundation/src"
+            
         }
     },
     "prefer-stable": true,
@@ -32,34 +41,30 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^8.0.2",
-        "vlucas/phpdotenv": "^5.2",
         "laminas/laminas-diactoros": "^3",
         "phpmailer/phpmailer": "^6.2",
         "miladrahimi/phprouter":"^5",
         "lazarusphp/openhandler": "^1.0.0",
         "psr/log": "^3.0",
-        "lazarusphp/requests": "^1.0.0",
-        "lazarusphp/lazarusdb": "^1.0.0",
-        "lazarusphp/sessionmanager": "v2.0.0"
+        "psr/container": "^2.0",
+        "vlucas/phpdotenv": "*"
     },
     "scripts": {
         "post-install-cmd": [
-            "if [ ! -f .env ]; then mv .env.example .env; else echo .env already exists; fi",
-            "if [ ! -f build ]; then mv build.example build; else echo file build already exists; fi",
+            "if [ ! -f.env ]; then mv .env.example .env; else echo .env already exists; fi",
+            "if [ ! -f app ]; then mv app.example app; else echo file app already exists; fi",
            "if [ ! -d Storage ]; then mkdir Storage; else echo Storage directory already exists; fi",
             "chmod -R 0777 Storage",
-            "chmod +x build",
+            "chmod +x app",
             "echo Install complete"
         ],
         "post-update-cmd": [
             "if [ ! -f .env ]; then mv .env.example .env; else echo .env already exists; fi",
-            "if [ ! -f build ]; then mv build.example schema; else echo  file build already exists; fi",
+            "if [ ! -f app ]; then mv app.example schema; else echo  file app already exists; fi",
             "if [ ! -d Storage ]; then mkdir Storage; else echo Storage directory already exists; fi",
             "chmod -R 0777 Storage",
-            "chmod +x build",
+            "chmod +x app",
             "echo Update complete"
-
-
         ]
     }
 
