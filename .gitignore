@@ -5,6 +5,7 @@ Dev
 /Migrations/Schemas/*.php
 .idea
 Dev
+Bootstrap/Cache
 composer.lock
 *.Identifier
 build
