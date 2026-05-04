@@ -2,22 +2,12 @@
 ob_start();
 
 use LazarusPhp\Exceptions\Exceptions\FileNotFoundException;
-use LazarusPhp\Foundation\PathResolver\Resolve;
+use LazarusPhp\PathResolver\Resolve;
+use App\Boot;
+use LazarusPhp\Core\Containers\ContainerFactory;
 
 require_once(__DIR__ . "/../vendor/autoload.php");
 // Autoload Dispatcher as Global
-Resolve::init(__DIR__, 1);
-
-
-
-if (!class_exists('App\Boot')) {
-    throw new FileNotFoundException("Boot Class does not Exist");
-}
-
-try {
-    require_once(Resolve::get("Root") . "/Bootloader/Providers.php");
-} catch (FileNotFoundException $e) {
-    echo "Bootloader/Providers.php file not found";
-    exit;
-}
+// Resolve::init(__DIR__, 1);
+include dirname(__DIR__,1)."/Bootstrap/App.php";
 ob_flush();
