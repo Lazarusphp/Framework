@@ -1,16 +1,20 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Http\Model\Users;
-use App\System\Classes\Templating\Views;
-use LazarusPhp\DateManager\Date;
+use LazarusPhp\ServiceProvider\Application;
+use LazarusPhp\ServiceProvider\Container;
+use LazarusPhp\Templating\View;
 
 class HomeController
 {
     public function index()
     {
-        echo "Welcome to Lazarusphp";
+        // echo Application::get("sessions")->get("username");
+        $user = Users::where("id",1)->with("posts")->first();
+        $view = new View("Home/Index.php");
+        echo $view->with("user",$user)->render();
     }
-
 
 
 }
